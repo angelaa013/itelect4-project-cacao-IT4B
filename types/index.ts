@@ -1,32 +1,44 @@
-// Enum
+// Enum for User Roles
 export enum UserRole {
-    Student = "student",
-    Teacher = "teacher",
-    Admin = "admin"
+    Tutor = "tutor",
+    Tutee = "tutee"
 }
 
-// Interface 1
+// Enum for Booking Status
+export enum BookingStatus {
+    Requested = "requested",
+    Confirmed = "confirmed",
+    Completed = "completed"
+}
+
+// Interface 1: User
 export interface User {
     id: number;
     name: string;
     email: string;
     role: UserRole;
     isActive: boolean;
-    score: number;
+    expertise?: string; // For tutors (e.g., "Mathematics", "English")
+    hourlyRate?: number; // For tutors
 }
 
-// Interface 2
-export interface Course {
-    name: string;
-    units: number;
-    semester: string;
+// Interface 2: Session
+export interface Session {
+    id: number;
+    subject: string;
+    duration: number; // in minutes
+    tutorId: number;
+    description: string;
 }
 
-// Interface 3
-export interface Submission {
-    studentId: number;
-    assignment: string;
-    grade: number;
+// Interface 3: Booking
+export interface Booking {
+    id: number;
+    tutorId: number;
+    sessionId: number;
+    status: BookingStatus;
+    scheduledDate: string;
+    totalCost: number;
 }
 
 // Generic Interface
