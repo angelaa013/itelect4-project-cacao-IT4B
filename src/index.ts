@@ -1,38 +1,39 @@
-import {
-    User,
-    Session,
-    Booking,
+﻿import {
+    Pet,
+    Adopter,
+    AdoptionRequest,
     ApiResponse,
-    UserRole,
-    BookingStatus
-} from "./types";
+    PetType,
+    AdoptionStatus
+} from "../types";
 
-// Function 1: Get Tutor Profile
-function getTutor(id: number): User {
+// Function 1: Get Pet Profile
+function getPet(id: number): Pet {
     return {
         id,
-        name: "Maria Santos",
-        email: "maria@tutoring.com",
-        role: UserRole.Tutor,
-        isActive: true,
-        expertise: "Mathematics",
-        hourlyRate: 500
+        name: "Luna",
+        type: PetType.Dog,
+        age: 2,
+        breed: "Golden Retriever",
+        vaccinated: false,
+        adoptionFee: 75
     };
 }
 
-// Function 2: Calculate Total Cost
-function calculateTotalCost(hourlyRate: number, duration: number): number {
-    const hours = duration / 60;
-    return hourlyRate * hours;
+// Function 2: Calculate Total Adoption Cost
+function calculateAdoptionCost(baseFee: number, donationAmount: number): number {
+    // total cost is the pet's adoption fee plus any extra donation
+    return baseFee + donationAmount;
 }
 
-// Function 3: Format Session Info
-function formatSession(
-    subject: string,
-    duration: number,
-    description: string
+// Function 3: Format Pet Profile
+function formatPetProfile(
+    name: string,
+    type: PetType,
+    age: number,
+    breed: string
 ): string {
-    return `${subject} - ${duration} minutes: ${description}`;
+    return `${name} (${type}) - ${age} years old, ${breed}`;
 }
 
 // Generic Function: Get First Item
@@ -40,38 +41,42 @@ function getFirst<T>(items: T[]): T | undefined {
     return items[0];
 }
 
-// Utility Type 1: Partial User (update tutor profile)
-const updatedTutor: Partial<User> = {
-    hourlyRate: 600,
-    expertise: "Advanced Mathematics"
+// Utility Type 1: Partial Pet (update pet profile)
+const updatedPet: Partial<Pet> = {
+    breed: "Golden Retriever"
 };
 
-// Utility Type 2: Pick User (tutee contact info)
-const tuteeContact: Pick<User, "name" | "email"> = {
-    name: "Miguel Rodriguez",
-    email: "miguel@student.com"
+// Utility Type 2: Pick Adopter (contact info)
+const adopterContact: Pick<Adopter, "name" | "email"> = {
+    name: "Rei Reyes",
+    email: "rei.reyes@email.com"
 };
 
-// Generic Interface Example: Booking Response
-const bookingResponse: ApiResponse<Booking> = {
+const pet: Pet = getPet(1);
+const baseAdoptionFee: number = pet.adoptionFee;
+const donationAmount: number = 20;
+const totalAdoptionCost: number = calculateAdoptionCost(baseAdoptionFee, donationAmount);
+
+// Generic Interface Example: Adoption Response
+const adoptionResponse: ApiResponse<AdoptionRequest> = {
     success: true,
-    message: "Booking confirmed successfully",
+    message: "Adoption request approved successfully",
     data: {
         id: 1,
-        tutorId: 1,
-        sessionId: 101,
-        status: BookingStatus.Confirmed,
-        scheduledDate: "2025-01-20 14:00",
-        totalCost: 500
+        petId: 1,
+        adopterId: 1,
+        status: AdoptionStatus.Approved,
+        requestedDate: "2025-01-20",
+        totalFee: totalAdoptionCost
     }
 };
 
-const tutor: User = getTutor(1);
-
-console.log(tutor);
-console.log(calculateTotalCost(500, 60));
-console.log(formatSession("Mathematics", 60, "Algebra fundamentals"));
-console.log(getFirst([BookingStatus.Requested, BookingStatus.Confirmed]));
-console.log(updatedTutor);
-console.log(tuteeContact);
-console.log(bookingResponse);
+console.log(pet);
+console.log(`Base adoption fee: ${baseAdoptionFee}`);
+console.log(`Donation amount: ${donationAmount}`);
+console.log(`Total adoption cost: ${totalAdoptionCost}`);
+console.log(formatPetProfile("Luna", PetType.Dog, 2, "Golden Retriever"));
+console.log(getFirst([AdoptionStatus.Pending, AdoptionStatus.Approved]));
+console.log(updatedPet);
+console.log(adopterContact);
+console.log(adoptionResponse);

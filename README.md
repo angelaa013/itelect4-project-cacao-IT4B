@@ -1,30 +1,30 @@
-# Peer Tutoring Booking Platform
+# Pet Adoption Platform
 
 ## Project Concept
 
-A TypeScript-based peer tutoring booking system that manages tutors, tutees, and tutoring sessions. The platform demonstrates core TypeScript concepts including:
+A TypeScript-based pet adoption platform that manages pets, adopters, and adoption requests. The application demonstrates key TypeScript concepts including:
 
-- **Interfaces**: User, Session, and Booking types for structured data
-- **Enums**: UserRole (Tutor/Tutee) and BookingStatus (Requested/Confirmed/Completed)
-- **Generic Interface**: ApiResponse<T> for flexible API responses
-- **Generic Functions**: getFirst<T> to work with any array type
-- **Utility Types**: Partial<User> and Pick<User> for type manipulation
+- **Interfaces**: `Pet`, `Adopter`, and `AdoptionRequest` for structured domain entities
+- **Enums**: `PetType` and `AdoptionStatus` for fixed value sets
+- **Generic Interface**: `ApiResponse<T>` for reusable API response shape
+- **Generic Function**: `getFirst<T>` to return the first item from any array type
+- **Utility Types**: `Partial<Pet>` and `Pick<Adopter, "name" | "email">`
 
 ## Features
 
-- Create tutor profiles with expertise and hourly rates
-- Calculate tutoring session costs based on duration
-- Format session information
-- Track booking statuses
-- Manage tutor and tutee information
+- Define pet profiles with breed, age, vaccination status, and adoption fee
+- Calculate total adoption cost including donation
+- Format pet profile details into a readable string
+- Use generic utilities and TypeScript type helpers
+- Return adoption request data in a generic API response structure
 
 ## Project Structure
 
 ```
 src/
-  ├── index.ts          # Main application logic
-  └── types/
-      └── index.ts      # TypeScript interfaces and enums
+  └── index.ts          # Main application logic
+types/
+  └── index.ts          # TypeScript interfaces and enums
 package.json
 tsconfig.json
 README.md
@@ -49,20 +49,20 @@ README.md
 
 ## Requirements Met
 
-✅ All Part 1 interfaces for the app (User, Session, Booking)  
-✅ Generic interface ApiResponse<T>  
-✅ Generic function getFirst<T>  
-✅ Two utility types: Partial<User>, Pick<User>  
-✅ Two enums: UserRole, BookingStatus  
+✅ Interfaces for the app entities: `Pet`, `Adopter`, `AdoptionRequest`  
+✅ Generic interface `ApiResponse<T>`  
+✅ Generic function `getFirst<T>`  
+✅ Utility types: `Partial<Pet>`, `Pick<Adopter, "name" | "email">`  
+✅ Enums: `PetType`, `AdoptionStatus`  
 ✅ Zero TypeScript compilation errors  
 
 ## Example Output
 
 When you run `npx ts-node src/index.ts`, you'll see:
-- Tutor profile information with expertise and hourly rate
-- Calculated tutoring session cost (₱500 for 60 minutes)
-- Formatted session details (Mathematics - 60 minutes: Algebra fundamentals)
-- Booking status (requested/confirmed)
-- Updated tutor profile (Partial<User>)
-- Tutee contact information (Pick<User>)
-- Booking confirmation response with all details
+- A pet profile object for Luna
+- The total adoption cost including donation
+- A formatted pet profile string
+- A generic adoption status result from `getFirst`  
+- An updated pet object using `Partial<Pet>`  
+- Adopter contact details using `Pick<Adopter, "name" | "email">`  
+- A generic adoption response object with approval status
