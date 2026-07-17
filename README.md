@@ -69,3 +69,7 @@ Running `npx ts-node src/index.ts` produces:
 - Picked adopter contact details
 - A generic adoption response object containing `totalFee`
 
+## Author
+Princess Angela Cacao
+IT4B
+De La Salle Lipa
