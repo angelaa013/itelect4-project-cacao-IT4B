@@ -16,15 +16,13 @@ const BASE_FEES: Partial<Record<PetType, number>> = {
 };
 
 // Function 1: Get Pet Profile
-function getPet(id: number, overrideFee?: number): Pet {
+function getPet(id: number): Pet {
     // Example data for the pet — in a real app this would come from a DB
     const petAge = 2;
     const petType = PetType.Dog;
 
-    // Compute fee: use override if provided, otherwise derive from type and age
-    const base = BASE_FEES[petType] ?? 50;
-    const ageDiscount = petAge > 5 ? 10 : 0; // simple discount for older pets
-    const adoptionFee = overrideFee !== undefined ? overrideFee : Math.max(0, base - ageDiscount);
+    // Compute fee from pet type only
+    const adoptionFee = BASE_FEES[petType] ?? 50;
 
     return {
         id,
