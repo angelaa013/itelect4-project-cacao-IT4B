@@ -72,7 +72,7 @@ Running `npx ts-node src/index.ts` prints:
 
 ## Notes
 
-- The adoption fee is configured by pet type for dogs and cats.
+- The adoption fee is configured by pet type for dogs and cats and is not overridden by age.
 - `Partial<Pet>` is used to model a partial update object.
 - `Pick<Adopter, "name" | "email">` is used to model contact info.
 
