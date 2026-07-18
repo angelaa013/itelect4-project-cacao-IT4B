@@ -4,19 +4,37 @@
     AdoptionRequest,
     ApiResponse,
     PetType,
+    Gender,
+    PetProfile,
     AdoptionStatus
 } from "../types";
 
+// Base fees by pet type — only defined for dogs and cats per request
+const BASE_FEES: Partial<Record<PetType, number>> = {
+    [PetType.Dog]: 75,
+    [PetType.Cat]: 50
+};
+
 // Function 1: Get Pet Profile
-function getPet(id: number): Pet {
+function getPet(id: number, overrideFee?: number): Pet {
+    // Example data for the pet — in a real app this would come from a DB
+    const petAge = 2;
+    const petType = PetType.Dog;
+
+    // Compute fee: use override if provided, otherwise derive from type and age
+    const base = BASE_FEES[petType] ?? 50;
+    const ageDiscount = petAge > 5 ? 10 : 0; // simple discount for older pets
+    const adoptionFee = overrideFee !== undefined ? overrideFee : Math.max(0, base - ageDiscount);
+
     return {
         id,
         name: "Luna",
-        type: PetType.Dog,
-        age: 2,
+        type: petType,
+        gender: Gender.Female,
+        age: petAge,
         breed: "Golden Retriever",
         vaccinated: false,
-        adoptionFee: 75
+        adoptionFee
     };
 }
 
@@ -30,10 +48,11 @@ function calculateAdoptionCost(baseFee: number, donationAmount: number): number 
 function formatPetProfile(
     name: string,
     type: PetType,
+    gender: Gender,
     age: number,
     breed: string
 ): string {
-    return `${name} (${type}) - ${age} years old, ${breed}`;
+    return `${name} (${type}) - ${age} years old, ${breed}, ${gender}`;
 }
 
 // Generic Function: Get First Item
@@ -75,7 +94,7 @@ console.log(pet);
 console.log(`Base adoption fee: ${baseAdoptionFee}`);
 console.log(`Donation amount: ${donationAmount}`);
 console.log(`Total adoption cost: ${totalAdoptionCost}`);
-console.log(formatPetProfile("Luna", PetType.Dog, 2, "Golden Retriever"));
+console.log(formatPetProfile(pet.name, pet.type, pet.gender, pet.age, pet.breed));
 console.log(getFirst([AdoptionStatus.Pending, AdoptionStatus.Approved]));
 console.log(updatedPet);
 console.log(adopterContact);

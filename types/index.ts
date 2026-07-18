@@ -11,14 +11,30 @@ export enum AdoptionStatus {
     Completed = "completed"
 }
 
+export enum Gender {
+    Male = "male",
+    Female = "female",
+    Unknown = "unknown"
+}
+
 export interface Pet {
     id: number;
     name: string;
     type: PetType;
+    gender: Gender;
     age: number; // in years
     breed: string;
     vaccinated: boolean;
     adoptionFee: number;
+}
+
+export interface PetProfile {
+    id: number;
+    name: string;
+    type: PetType;
+    gender: Gender;
+    age: number;
+    breed: string;
 }
 
 export interface Adopter {
