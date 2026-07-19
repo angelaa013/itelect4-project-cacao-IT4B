@@ -1,0 +1,13 @@
+.adopter-card {
+    width: auto;
+    margin: 0 0 8px 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+}
+
+.adopter-card h3,
+.adopter-card p {
+    margin: 4px 0;
+    padding: 0;
+}

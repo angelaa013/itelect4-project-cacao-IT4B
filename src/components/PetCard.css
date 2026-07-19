@@ -1,0 +1,28 @@
+.pet-card {
+    width: auto;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    margin: 0 0 8px 0;
+}
+
+/* Minimal, no-design button placed after the card */
+.pet-card-actions {
+    margin: 4px 0 16px 0;
+}
+.pet-card button,
+.pet-card-actions button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.pet-card p,
+.pet-card h3 {
+    margin: 4px 0;
+    padding: 0;
+}

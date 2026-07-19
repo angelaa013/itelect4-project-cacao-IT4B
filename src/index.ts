@@ -1,13 +1,5 @@
-﻿import {
-    Pet,
-    Adopter,
-    AdoptionRequest,
-    ApiResponse,
-    PetType,
-    Gender,
-    PetProfile,
-    AdoptionStatus
-} from "../types";
+import { PetType, Gender, AdoptionStatus } from "./types";
+import type { Pet, Adopter, AdoptionRequest, ApiResponse, PetProfile } from "./types";
 
 // Base fees by pet type — only defined for dogs and cats per request
 const BASE_FEES: Partial<Record<PetType, number>> = {
@@ -70,7 +62,15 @@ const adopterContact: Pick<Adopter, "name" | "email"> = {
 };
 
 const pet: Pet = getPet(1);
-const baseAdoptionFee: number = pet.adoptionFee;
+const petProfile: PetProfile = {
+    id: pet.id,
+    name: pet.name,
+    type: pet.type,
+    gender: pet.gender,
+    age: pet.age,
+    breed: pet.breed
+};
+const baseAdoptionFee: number = pet.adoptionFee ?? 0;
 const donationAmount: number = 20;
 const totalAdoptionCost: number = calculateAdoptionCost(baseAdoptionFee, donationAmount);
 
@@ -89,6 +89,7 @@ const adoptionResponse: ApiResponse<AdoptionRequest> = {
 };
 
 console.log(pet);
+console.log(petProfile);
 console.log(`Base adoption fee: ${baseAdoptionFee}`);
 console.log(`Donation amount: ${donationAmount}`);
 console.log(`Total adoption cost: ${totalAdoptionCost}`);
