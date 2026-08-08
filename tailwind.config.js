@@ -9,19 +9,21 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#4A3525", // Soft Warm Espresso Brown for readable minimalist text
-          light: "#6B503B",
-          dark: "#2D1F15",
+          DEFAULT: "#3D0C02", // Deep Maroon / Dark Chocolate Brown
+          light: "#5B180B",
+          dark: "#2B0801",
         },
-        secondary: "#F4A21A", // Pawhome Warm Golden Amber
-        accent: "#FA799F",    // Pawhome Soft Rose Pink
+        secondary: "#FAAB18", // Pawhome Golden Amber Yellow
+        accent: "#FA799F",    // Pawhome Rose Pink
         cream: {
-          DEFAULT: "#FFF8EC", // Light Cream Main Background
-          card: "#FFFDF7",    // Minimalist Light Card Background
-          yellow: "#FFF1D6",  // Soft Pastel Amber Card
+          DEFAULT: "#FFFDF3", // Light Cream Background
+          card: "#FFFFFF",    // Minimalist Light Card Background
+          yellow: "#FEF2D6",  // Soft Pastel Amber Card
           pink: "#FDE8F0",    // Soft Pastel Pink Card
         },
-        "dark-brown": "#2D1F15",
+        "dark-brown": "#3D0C02",
+        "dark-bg": "#1E0C0E",
+        "dark-card": "#2B1517",
       },
     },
   },

@@ -101,15 +101,15 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#FFF8EC] dark:bg-[#1F140D] flex items-center justify-center">
+      <div className="min-h-screen bg-[#FFFDF3] dark:bg-[#1E0C0E] flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block">
-            <div className="animate-spin rounded-full h-16 w-16 border-4 border-[#F4A21A] border-t-[#4A3525] mb-4"></div>
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-[#FAAB18] border-t-[#3D0C02] mb-4"></div>
           </div>
-          <p className="text-xl text-[#4A3525] dark:text-[#FFF8EC] font-extrabold tracking-wide">
+          <p className="text-xl text-[#3D0C02] dark:text-[#FFFDF3] font-black tracking-wide">
             Loading Pawhome adoption platform...
           </p>
-          <p className="text-[#4A3525]/70 dark:text-[#FFF8EC]/70 mt-2 font-medium">
+          <p className="text-[#3D0C02]/70 dark:text-[#FFFDF3]/70 mt-2 font-semibold">
             Give this fluffy paw a new home.
           </p>
         </div>
@@ -118,40 +118,41 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FFF8EC] dark:bg-[#1F140D] text-[#4A3525] dark:text-[#FFF8EC] transition-colors duration-300">
+    <div className="min-h-screen bg-[#FFFDF3] dark:bg-[#1E0C0E] text-[#3D0C02] dark:text-[#FFFDF3] transition-colors duration-300">
       {/* Header styled like PAWHOME */}
-      <header className="bg-[#FFF8EC] dark:bg-[#1F140D] border-b border-[#4A3525]/10 dark:border-[#F4A21A]/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex justify-between items-center flex-col sm:flex-row gap-6">
+      <header className="bg-[#FFFDF3] dark:bg-[#1E0C0E] border-b border-[#3D0C02]/10 dark:border-[#FAAB18]/20 sticky top-0 z-50 backdrop-blur-md bg-opacity-90 dark:bg-opacity-90">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+          <div className="flex justify-between items-center flex-col sm:flex-row gap-4">
             <div className="flex items-center gap-3">
               {/* Pawhome House Icon */}
-              <div className="w-14 h-14 bg-[#F4A21A] rounded-2xl flex items-center justify-center shadow-sm text-[#4A3525] shrink-0">
+              <div className="w-14 h-14 bg-[#FAAB18] rounded-2xl flex items-center justify-center shadow-md text-[#3D0C02] shrink-0 transform hover:scale-105 transition-transform">
                 <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24">
                   <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 5.5a2.5 2.5 0 0 1 2.5 2.5c0 1.38-1.12 2.5-2.5 2.5S9.5 12.38 9.5 11s1.12-2.5 2.5-2.5z"/>
                 </svg>
               </div>
               <div>
-                <h1 className="text-4xl font-extrabold text-[#4A3525] dark:text-[#F4A21A] tracking-wider uppercase">
+                <h1 className="text-4xl font-black text-[#3D0C02] dark:text-[#FAAB18] tracking-wider uppercase">
                   PAWHOME
                 </h1>
-                <p className="text-[#4A3525]/80 dark:text-[#FFF8EC]/80 text-sm font-semibold mt-0.5">
+                <p className="text-[#3D0C02]/80 dark:text-[#FFFDF3]/80 text-sm font-bold mt-0.5">
                   Give this fluffy paw a new home.
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className="bg-[#FFF1D6] hover:bg-[#FEEEC8] dark:bg-[#2D1F15] dark:hover:bg-[#3D2E24] text-[#4A3525] dark:text-[#F4A21A] border border-[#F4A21A]/40 px-5 py-2.5 rounded-2xl font-bold transition-all duration-200 flex items-center gap-2 shadow-sm"
+                className="bg-[#FEF2D6] hover:bg-[#FEEAA1] dark:bg-[#2B1517] dark:hover:bg-[#3D1D20] text-[#3D0C02] dark:text-[#FAAB18] border-2 border-[#FAAB18]/50 px-5 py-2.5 rounded-2xl font-black transition-all duration-200 flex items-center gap-2 shadow-sm cursor-pointer"
+                title="Toggle Dark/Light Mode"
               >
-                {darkMode ? "☀️ Light" : "🌙 Dark"}
+                {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
               </button>
               <button
                 onClick={() => setCompactView(!compactView)}
-                className="bg-[#FA799F] hover:bg-[#f5668f] text-white px-5 py-2.5 rounded-2xl font-bold transition-all duration-200 shadow-sm"
+                className="bg-[#FA799F] hover:bg-[#f5668f] text-white px-5 py-2.5 rounded-2xl font-black transition-all duration-200 shadow-sm cursor-pointer border-2 border-[#FA799F]"
               >
-                {compactView ? "📋 Compact" : "📄 Default"}
+                {compactView ? "📋 Compact View" : "📄 Default View"}
               </button>
             </div>
           </div>
@@ -159,10 +160,29 @@ function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Selected Pet Banner Notification */}
+        {selectedPet && (
+          <div className="mb-8 p-4 rounded-2xl bg-[#FEF2D6] dark:bg-[#2B1517] border-2 border-[#FAAB18] flex items-center justify-between shadow-sm animate-fade-in">
+            <div className="flex items-center gap-3 text-[#3D0C02] dark:text-[#FAAB18] font-black">
+              <span className="text-2xl">🎉</span>
+              <div>
+                <span className="text-sm uppercase tracking-wider block text-[#3D0C02]/70 dark:text-[#FFFDF3]/70 font-bold">Selected Pet for Adoption</span>
+                <span className="text-lg">You selected <span className="underline">{selectedPet}</span>!</span>
+              </div>
+            </div>
+            <button
+              onClick={() => setSelectedPet("")}
+              className="text-xs uppercase bg-[#FAAB18] text-[#3D0C02] px-3 py-1.5 rounded-xl font-black hover:bg-[#e5990b] transition-colors cursor-pointer"
+            >
+              Clear
+            </button>
+          </div>
+        )}
+
         {/* Search Section */}
         <section className="mb-10">
-          <div className="bg-[#FFFDF7] dark:bg-[#2D1F15] rounded-3xl shadow-sm hover:shadow-md transition-shadow p-6 sm:p-8 border-2 border-[#4A3525]/10 dark:border-[#F4A21A]/30">
-            <label className="block text-xs font-extrabold uppercase tracking-wider text-[#4A3525] dark:text-[#F4A21A] mb-3">
+          <div className="bg-white dark:bg-[#2B1517] rounded-3xl shadow-sm hover:shadow-md transition-shadow p-6 sm:p-8 border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30">
+            <label className="block text-xs font-black uppercase tracking-widest text-[#3D0C02] dark:text-[#FAAB18] mb-3">
               Search Pets
             </label>
             <input
@@ -171,10 +191,10 @@ function App() {
               value={searchTerm}
               placeholder="Search pets by name or breed..."
               onChange={handleSearchChange}
-              className="w-full px-5 py-3.5 bg-[#FFF8EC] dark:bg-[#1F140D] border-2 border-[#4A3525]/20 dark:border-[#F4A21A]/40 text-[#4A3525] dark:text-[#FFF8EC] placeholder-[#4A3525]/50 dark:placeholder-[#FFF8EC]/40 rounded-2xl focus:outline-none focus:border-[#F4A21A] dark:focus:border-[#F4A21A] transition-colors font-medium"
+              className="w-full px-5 py-3.5 bg-[#FFFDF3] dark:bg-[#1E0C0E] border-2 border-[#3D0C02]/20 dark:border-[#FAAB18]/40 text-[#3D0C02] dark:text-[#FFFDF3] placeholder-[#3D0C02]/50 dark:placeholder-[#FFFDF3]/40 rounded-2xl focus:outline-none focus:border-[#FAAB18] dark:focus:border-[#FAAB18] transition-colors font-extrabold"
             />
             {previousSearch !== undefined && previousSearch !== searchTerm && (
-              <p className="mt-3 text-sm text-[#4A3525]/70 dark:text-[#FFF8EC]/70 italic">
+              <p className="mt-3 text-sm text-[#3D0C02]/70 dark:text-[#FFFDF3]/70 italic font-semibold">
                 Previous search: "{previousSearch}"
               </p>
             )}
@@ -185,7 +205,7 @@ function App() {
         <section className="mb-12">
           <div className="flex items-center gap-3 mb-6">
             <span className="text-2xl">🐶</span>
-            <h2 className="text-3xl font-extrabold text-[#4A3525] dark:text-[#F4A21A] tracking-tight">
+            <h2 className="text-3xl font-black text-[#3D0C02] dark:text-[#FAAB18] tracking-tight">
               Available Pets
             </h2>
           </div>
@@ -201,11 +221,11 @@ function App() {
                 />
               ))
             ) : (
-              <div className="col-span-full bg-[#FFF1D6] dark:bg-[#2D1F15] border-2 border-[#F4A21A] rounded-3xl p-8 text-center">
-                <p className="text-xl text-[#4A3525] dark:text-[#F4A21A] font-bold">
+              <div className="col-span-full bg-[#FEF2D6] dark:bg-[#2B1517] border-2 border-[#FAAB18] rounded-3xl p-8 text-center">
+                <p className="text-xl text-[#3D0C02] dark:text-[#FAAB18] font-black">
                   No pets matching "{searchTerm}"
                 </p>
-                <p className="text-[#4A3525]/70 dark:text-[#FFF8EC]/70 mt-2 font-medium">
+                <p className="text-[#3D0C02]/70 dark:text-[#FFFDF3]/70 mt-2 font-bold">
                   Try adjusting your search criteria
                 </p>
               </div>
@@ -217,7 +237,7 @@ function App() {
         <div className="mb-12">
           <button
             onClick={toggleDetails}
-            className="bg-[#F4A21A] hover:bg-[#e5930b] text-[#4A3525] font-extrabold py-3.5 px-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 transform hover:scale-[1.02] w-full sm:w-auto border border-[#F4A21A]/50"
+            className="bg-[#FAAB18] hover:bg-[#e5990b] text-[#3D0C02] font-black py-4 px-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 transform hover:scale-[1.02] w-full sm:w-auto border-2 border-[#3D0C02]/20 cursor-pointer"
           >
             {showDetails ? "📋 Hide" : "📖 Show"} Adopter & Request Records
           </button>
@@ -230,7 +250,7 @@ function App() {
             <section className="mb-12">
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-2xl">👤</span>
-                <h2 className="text-3xl font-extrabold text-[#4A3525] dark:text-[#FA799F] tracking-tight">
+                <h2 className="text-3xl font-black text-[#3D0C02] dark:text-[#FA799F] tracking-tight">
                   Adopters
                 </h2>
               </div>
@@ -244,8 +264,8 @@ function App() {
                     />
                   ))
                 ) : (
-                  <div className="col-span-full bg-[#FDE8F0] dark:bg-[#2D1F15] border-2 border-[#FA799F] rounded-3xl p-8 text-center">
-                    <p className="text-[#4A3525] dark:text-[#FA799F] font-bold">
+                  <div className="col-span-full bg-[#FDE8F0] dark:bg-[#2B1517] border-2 border-[#FA799F] rounded-3xl p-8 text-center">
+                    <p className="text-[#3D0C02] dark:text-[#FA799F] font-black">
                       No adopters found
                     </p>
                   </div>
@@ -257,7 +277,7 @@ function App() {
             <section className="mb-12">
               <div className="flex items-center gap-3 mb-6">
                 <span className="text-2xl">📋</span>
-                <h2 className="text-3xl font-extrabold text-[#4A3525] dark:text-[#F4A21A] tracking-tight">
+                <h2 className="text-3xl font-black text-[#3D0C02] dark:text-[#FAAB18] tracking-tight">
                   Adoption Requests
                 </h2>
               </div>
@@ -271,8 +291,8 @@ function App() {
                     />
                   ))
                 ) : (
-                  <div className="col-span-full bg-[#FFF1D6] dark:bg-[#2D1F15] border-2 border-[#F4A21A] rounded-3xl p-8 text-center">
-                    <p className="text-[#4A3525] dark:text-[#F4A21A] font-bold">
+                  <div className="col-span-full bg-[#FEF2D6] dark:bg-[#2B1517] border-2 border-[#FAAB18] rounded-3xl p-8 text-center">
+                    <p className="text-[#3D0C02] dark:text-[#FAAB18] font-black">
                       No adoption requests yet
                     </p>
                   </div>

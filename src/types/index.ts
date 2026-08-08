@@ -14,7 +14,8 @@ export enum Gender {
 export enum AdoptionStatus {
     Pending = "pending",
     Approved = "approved",
-    Completed = "completed"
+    Completed = "completed",
+    Rejected = "rejected"
 }
 
 export interface Pet {

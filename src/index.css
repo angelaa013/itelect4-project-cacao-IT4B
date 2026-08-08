@@ -1,16 +1,21 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --color-primary: #4A3525;
-  --color-primary-light: #6B503B;
-  --color-primary-dark: #2D1F15;
-  --color-secondary: #F4A21A;
+  --color-primary: #3D0C02;
+  --color-primary-light: #5B180B;
+  --color-primary-dark: #2B0801;
+  --color-secondary: #FAAB18;
   --color-accent: #FA799F;
-  --color-cream: #FFF8EC;
-  --color-cream-card: #FFFDF7;
-  --color-cream-yellow: #FFF1D6;
+  --color-cream: #FFFDF3;
+  --color-cream-card: #FFFFFF;
+  --color-cream-yellow: #FEF2D6;
   --color-cream-pink: #FDE8F0;
-  --color-dark-brown: #2D1F15;
+  --color-dark-brown: #3D0C02;
+  --color-dark-bg: #1E0C0E;
+  --color-dark-card: #2B1517;
+  --color-dark-border: #4A2326;
 }
 
 :root {
@@ -18,15 +23,17 @@
 }
 
 body {
-  background-color: #FFF8EC;
-  color: #4A3525;
+  background-color: #FFFDF3;
+  color: #3D0C02;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   margin: 0;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 html.dark body {
-  background-color: #1F140D;
-  color: #FFF8EC;
+  background-color: #1E0C0E;
+  color: #FFFDF3;
 }
 
 html {
