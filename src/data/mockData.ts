@@ -55,12 +55,6 @@ export const initialAdopters: Adopter[] = [
     email: "rei.reyes@email.com",
     contact: "09123456789",
   },
-  {
-    id: 2,
-    name: "Ana Santos",
-    email: "ana.santos@email.com",
-    contact: "09987654321",
-  },
 ];
 
 export const initialRequests: AdoptionRequest[] = [
@@ -72,14 +66,5 @@ export const initialRequests: AdoptionRequest[] = [
     adopterId: 1,
     status: AdoptionStatus.Pending,
     requestedDate: "2026-08-10",
-  },
-  {
-    id: 2,
-    petName: "Luna",
-    adopterName: "Ana Santos",
-    petId: 2,
-    adopterId: 2,
-    status: AdoptionStatus.Approved,
-    requestedDate: "2026-08-12",
   },
 ];
