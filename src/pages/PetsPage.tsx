@@ -1,15 +1,24 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import PetCard from "../components/PetCard";
-import { initialPets } from "../data/mockData";
+import { getPets } from "../api/client";
+import useUIStore from "../store/uiStore";
+import type { Pet } from "../types";
 
 function PetsPage() {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [compactView, setCompactView] = useState<boolean>(false);
+  const compactView = useUIStore((state) => state.compactView);
+  const toggleCompactView = useUIStore((state) => state.toggleCompactView);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-  const filteredPets = initialPets.filter(
+  const { data: pets = [], isLoading, isError } = useQuery<Pet[]>({
+    queryKey: ['pets'],
+    queryFn: getPets
+  });
+
+  const filteredPets = pets.filter(
     (pet) =>
       pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       pet.breed.toLowerCase().includes(searchTerm.toLowerCase())
@@ -38,7 +47,7 @@ function PetsPage() {
         </div>
         <button
           id="compact-view-btn"
-          onClick={() => setCompactView(!compactView)}
+          onClick={toggleCompactView}
           className="bg-[#FA799F] hover:bg-[#f5668f] text-white px-5 py-2.5 rounded-2xl font-black transition-all duration-200 shadow-sm cursor-pointer border-2 border-[#FA799F]"
         >
           {compactView ? "📄 Default View" : "📋 Compact View"}
@@ -65,12 +74,21 @@ function PetsPage() {
 
       {/* Pets Grid */}
       <section>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredPets.length > 0 ? (
-            filteredPets.map((pet) => (
-              <div key={pet.id} className="flex flex-col gap-2">
-                <PetCard
-                  pet={pet}
+        {isLoading ? (
+          <div className="flex justify-center py-12">
+            <p className="text-xl font-black text-[#3D0C02] dark:text-[#FAAB18]">Loading pets...</p>
+          </div>
+        ) : isError ? (
+          <div className="flex justify-center py-12">
+            <p className="text-xl font-black text-red-500">Error loading pets.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredPets.length > 0 ? (
+              filteredPets.map((pet) => (
+                <div key={pet.id} className="flex flex-col gap-2">
+                  <PetCard
+                    pet={pet}
                   onAdopt={handleAdopt}
                   isCompact={compactView}
                 />
@@ -94,6 +112,7 @@ function PetsPage() {
             </div>
           )}
         </div>
+        )}
       </section>
     </div>
   );

@@ -1,7 +1,25 @@
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getRequests } from "../api/client";
 import AdoptionRequestCard from "../components/AdoptionRequestCard";
-import { initialRequests } from "../data/mockData";
+import { AdoptionStatus, type AdoptionRequest } from "../types";
 
 function RequestsPage() {
+  const [filterStatus] = useState<AdoptionStatus | "all">("all");
+
+  const { data: requests = [], isLoading, isError } = useQuery<AdoptionRequest[]>({
+    queryKey: ['requests'],
+    queryFn: getRequests
+  });
+
+  const filteredRequests =
+    filterStatus === "all"
+      ? requests
+      : requests.filter((req) => req.status === filterStatus);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading requests</div>;
+
   return (
     <div>
       {/* Page Header */}
@@ -10,16 +28,24 @@ function RequestsPage() {
           📋 Adoption Requests
         </h1>
         <p className="text-[#3D0C02]/70 dark:text-[#FFFDF3]/70 font-semibold mt-1">
-          {initialRequests.length} request
-          {initialRequests.length !== 1 ? "s" : ""} in the system
+          {filteredRequests.length} request
+          {filteredRequests.length !== 1 ? "s" : ""} in the system
         </p>
       </div>
 
       {/* Requests Grid */}
       <section>
-        {initialRequests.length > 0 ? (
+        {isLoading ? (
+          <div className="flex justify-center py-12">
+            <p className="text-xl font-black text-[#3D0C02] dark:text-[#FAAB18]">Loading requests...</p>
+          </div>
+        ) : isError ? (
+          <div className="flex justify-center py-12">
+            <p className="text-xl font-black text-red-500">Error loading requests.</p>
+          </div>
+        ) : filteredRequests.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {initialRequests.map((request) => (
+            {filteredRequests.map((request) => (
               <AdoptionRequestCard key={request.id} request={request} />
             ))}
           </div>

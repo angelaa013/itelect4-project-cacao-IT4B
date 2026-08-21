@@ -1,0 +1,68 @@
+{
+  "pets": [
+    {
+      "id": 1,
+      "name": "Buddy",
+      "type": "dog",
+      "breed": "Golden Retriever",
+      "age": 3,
+      "gender": "male",
+      "description": "Friendly and playful dog who loves fetch and belly rubs.",
+      "vaccinated": true,
+      "adoptionFee": 500
+    },
+    {
+      "id": 2,
+      "name": "Luna",
+      "type": "cat",
+      "breed": "Persian Cat",
+      "age": 2,
+      "gender": "female",
+      "description": "Calm and affectionate cat. Loves cozy naps by the window.",
+      "vaccinated": true,
+      "adoptionFee": 300
+    },
+    {
+      "id": 3,
+      "name": "Max",
+      "type": "dog",
+      "breed": "Labrador Retriever",
+      "age": 4,
+      "gender": "male",
+      "description": "Energetic and loyal. Great with kids and other pets.",
+      "vaccinated": true,
+      "adoptionFee": 450
+    },
+    {
+      "id": 4,
+      "name": "Mochi",
+      "type": "cat",
+      "breed": "Scottish Fold",
+      "age": 1,
+      "gender": "female",
+      "description": "Tiny and curious. She will melt your heart instantly.",
+      "vaccinated": false,
+      "adoptionFee": 350
+    }
+  ],
+  "adopters": [
+    {
+      "id": 1,
+      "name": "Rei Reyes",
+      "email": "rei.reyes@email.com",
+      "contact": "09123456789",
+      "address": "123 Sampaguita Street, Quezon City"
+    }
+  ],
+  "requests": [
+    {
+      "id": 1,
+      "petName": "Buddy",
+      "adopterName": "Rei Reyes",
+      "petId": 1,
+      "adopterId": 1,
+      "status": "pending",
+      "requestedDate": "2026-08-10"
+    }
+  ]
+}
