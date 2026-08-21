@@ -1,11 +1,27 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { initialPets } from "../data/mockData";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getPetById, createAdoptionRequest } from "../api/client";
+import type { Pet } from "../types";
 
 function PetDetailPage() {
   const { petId } = useParams<{ petId: string }>();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const pet = initialPets.find((p) => p.id === Number(petId));
+  const { data: pet, isLoading, isError } = useQuery<Pet>({
+    queryKey: ['pet', petId],
+    queryFn: () => getPetById(Number(petId)),
+    enabled: !!petId
+  });
+
+  const mutation = useMutation({
+    mutationFn: createAdoptionRequest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['requests'] });
+      alert(`Adoption request submitted for ${pet?.name}! 🐾`);
+      navigate('/requests');
+    }
+  });
 
   const petEmojis: Record<string, string> = {
     dog: "🐕",
@@ -17,10 +33,27 @@ function PetDetailPage() {
   };
 
   const handleAdopt = () => {
-    alert(`Adoption request submitted for ${pet?.name}! 🐾`);
+    if (pet) {
+      mutation.mutate({
+        petName: pet.name,
+        adopterName: "Rei Reyes", // Currently hardcoded to the only mock user
+        petId: pet.id,
+        adopterId: 1,
+        status: "pending" as any,
+        requestedDate: new Date().toISOString().split('T')[0],
+      });
+    }
   };
 
-  if (!pet) {
+  if (isLoading) {
+    return (
+      <div className="text-center py-24">
+        <p className="text-xl font-black text-[#3D0C02] dark:text-[#FAAB18]">Loading pet details...</p>
+      </div>
+    );
+  }
+
+  if (isError || !pet) {
     return (
       <div className="text-center py-24">
         <span className="text-7xl block mb-6">🔍</span>

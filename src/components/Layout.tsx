@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import useAuthStore from "../store/authStore";
+import useUIStore from "../store/uiStore";
 
 function Layout() {
   const token = useAuthStore((state) => state.token);
   const logout = useAuthStore((state) => state.logout);
-  const [darkMode, setDarkMode] = useState<boolean>(false);
+  const darkMode = useUIStore((state) => state.darkMode);
+  const toggleDarkMode = useUIStore((state) => state.toggleDarkMode);
 
   useEffect(() => {
     const htmlElement = document.documentElement;
@@ -64,7 +66,7 @@ function Layout() {
               {/* Dark Mode Toggle */}
               <button
                 id="dark-mode-toggle"
-                onClick={() => setDarkMode(!darkMode)}
+                onClick={toggleDarkMode}
                 className="bg-[#FEF2D6] hover:bg-[#FEEAA1] dark:bg-[#2B1517] dark:hover:bg-[#3D1D20] text-[#3D0C02] dark:text-[#FAAB18] border-2 border-[#FAAB18]/50 px-4 py-2 rounded-xl font-black text-sm transition-all duration-200 flex items-center gap-1.5 shadow-sm cursor-pointer"
                 title="Toggle Dark/Light Mode"
               >
