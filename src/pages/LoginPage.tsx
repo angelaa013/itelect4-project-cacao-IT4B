@@ -2,6 +2,9 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/authStore";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 function LoginPage() {
   const [username, setUsername] = useState<string>("");
@@ -57,13 +60,13 @@ function LoginPage() {
             )}
 
             <div>
-              <label
+              <Label
                 htmlFor="login-username"
                 className="block text-xs font-black uppercase tracking-widest text-[#3D0C02] dark:text-[#FAAB18] mb-2"
               >
                 Username
-              </label>
-              <input
+              </Label>
+              <Input
                 id="login-username"
                 type="text"
                 value={username}
@@ -74,13 +77,13 @@ function LoginPage() {
             </div>
 
             <div>
-              <label
+              <Label
                 htmlFor="login-password"
                 className="block text-xs font-black uppercase tracking-widest text-[#3D0C02] dark:text-[#FAAB18] mb-2"
               >
                 Password
-              </label>
-              <input
+              </Label>
+              <Input
                 id="login-password"
                 type="password"
                 value={password}
@@ -90,13 +93,13 @@ function LoginPage() {
               />
             </div>
 
-            <button
+            <Button
               id="login-submit-btn"
               type="submit"
               className="w-full bg-[#FAAB18] hover:bg-[#e5990b] text-[#3D0C02] font-black py-4 px-4 rounded-2xl transition-all duration-200 transform hover:scale-[1.02] active:scale-95 shadow-sm hover:shadow-md text-base border-2 border-[#3D0C02]/20 cursor-pointer"
             >
               🔑 Sign In to PAWHOME
-            </button>
+            </Button>
 
             <p className="text-center text-[#3D0C02]/50 dark:text-[#FFFDF3]/50 text-xs font-semibold">
               Use any username & password to log in (mock auth)

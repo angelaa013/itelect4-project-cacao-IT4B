@@ -83,7 +83,7 @@ const adoptionResponse: ApiResponse<AdoptionRequest> = {
         petId: 1,
         adopterId: 1,
         status: AdoptionStatus.Approved,
-        requestedDate: "2025-01-20",
+        requestedDate: new Date("2025-01-20"),
         totalFee: totalAdoptionCost
     }
 };

@@ -1,11 +1,38 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { initialPets } from "../data/mockData";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { getPetById, createAdoptionRequest } from "@/api/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { adoptionRequestSchema, type AdoptionRequestFormValues } from "@/schemas/adoptionRequestSchema";
+import { AdoptionStatus, type Pet } from "@/types";
 
 function PetDetailPage() {
   const { petId } = useParams<{ petId: string }>();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const pet = initialPets.find((p) => p.id === Number(petId));
+  const { data: pet, isLoading, isError } = useQuery<Pet>({
+    queryKey: ['pet', petId],
+    queryFn: () => getPetById(Number(petId)),
+    enabled: !!petId
+  });
+
+  const mutation = useMutation({
+    mutationFn: createAdoptionRequest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['requests'] });
+      alert(`Adoption request submitted for ${pet?.name}! 🐾`);
+      navigate('/requests');
+    }
+  });
+
+  const { register, handleSubmit, formState: { errors } } = useForm<AdoptionRequestFormValues>({
+    resolver: zodResolver(adoptionRequestSchema),
+    defaultValues: { applicantName: "", githubProfile: "", phone: "", message: "" },
+  });
 
   const petEmojis: Record<string, string> = {
     dog: "🐕",
@@ -16,11 +43,30 @@ function PetDetailPage() {
     navigate("/pets");
   };
 
-  const handleAdopt = () => {
-    alert(`Adoption request submitted for ${pet?.name}! 🐾`);
+  const handleAdopt = (values: AdoptionRequestFormValues) => {
+    if (!pet) return;
+    mutation.mutate({
+      petName: pet.name,
+      adopterName: values.applicantName,
+      petId: pet.id,
+      adopterId: 1,
+      status: AdoptionStatus.Pending,
+      requestedDate: new Date().toISOString().split("T")[0],
+      githubProfile: values.githubProfile,
+      applicantPhone: values.phone,
+      message: values.message,
+    });
   };
 
-  if (!pet) {
+  if (isLoading) {
+    return (
+      <div className="text-center py-24">
+        <p className="text-xl font-black text-[#3D0C02] dark:text-[#FAAB18]">Loading pet details...</p>
+      </div>
+    );
+  }
+
+  if (isError || !pet) {
     return (
       <div className="text-center py-24">
         <span className="text-7xl block mb-6">🔍</span>
@@ -139,15 +185,32 @@ function PetDetailPage() {
             </div>
           )}
 
-          {/* Adopt Button */}
-          <button
-            id={`adopt-btn-${pet.id}`}
-            onClick={handleAdopt}
-            className="w-full bg-[#FAAB18] hover:bg-[#e5990b] text-[#3D0C02] font-black py-4 px-4 rounded-2xl transition-all duration-200 transform hover:scale-[1.02] active:scale-95 shadow-sm hover:shadow-md flex items-center justify-center gap-2 text-lg border-2 border-[#3D0C02]/20 cursor-pointer"
-          >
-            <span className="text-[#FA799F] text-xl">❤️</span> Adopt{" "}
-            {pet.name}
-          </button>
+          <form onSubmit={handleSubmit(handleAdopt)} noValidate className="space-y-4 rounded-2xl border border-[#3D0C02]/10 bg-[#FFFDF3] p-5">
+            <div>
+              <Label htmlFor="applicant-name">Your name</Label>
+              <Input id="applicant-name" aria-invalid={Boolean(errors.applicantName)} {...register("applicantName")} />
+              {errors.applicantName && <p className="mt-1 text-sm font-semibold text-red-700">{errors.applicantName.message}</p>}
+            </div>
+            <div>
+              <Label htmlFor="github-profile">GitHub profile URL</Label>
+              <Input id="github-profile" type="url" placeholder="https://github.com/your-username" aria-invalid={Boolean(errors.githubProfile)} {...register("githubProfile")} />
+              {errors.githubProfile && <p className="mt-1 text-sm font-semibold text-red-700">{errors.githubProfile.message}</p>}
+            </div>
+            <div>
+              <Label htmlFor="applicant-phone">Phone number</Label>
+              <Input id="applicant-phone" inputMode="tel" aria-invalid={Boolean(errors.phone)} {...register("phone")} />
+              {errors.phone && <p className="mt-1 text-sm font-semibold text-red-700">{errors.phone.message}</p>}
+            </div>
+            <div>
+              <Label htmlFor="application-message">Why are you a good match?</Label>
+              <textarea id="application-message" rows={4} aria-invalid={Boolean(errors.message)} className="flex w-full rounded-2xl border-2 border-[#3D0C02]/20 bg-white px-4 py-3 text-[#3D0C02] focus-visible:outline-none focus-visible:border-[#FAAB18]" {...register("message")} />
+              {errors.message && <p className="mt-1 text-sm font-semibold text-red-700">{errors.message.message}</p>}
+            </div>
+            {mutation.isError && <p className="text-sm font-semibold text-red-700">We could not submit your request. Please try again.</p>}
+            <Button id={`adopt-btn-${pet.id}`} type="submit" size="lg" disabled={mutation.isPending} className="w-full font-black text-lg">
+              {mutation.isPending ? "Submitting..." : `Adopt ${pet.name}`}
+            </Button>
+          </form>
         </div>
       </div>
     </div>

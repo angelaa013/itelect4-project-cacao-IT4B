@@ -55,9 +55,21 @@ export interface AdoptionRequest {
     petId?: number;
     adopterId?: number;
     status: AdoptionStatus;
-    requestedDate?: string;
+    requestedDate?: Date;
     totalFee?: number;
+    applicantEmail?: string;
+    githubProfile?: string;
+    applicantPhone?: string;
+    message?: string;
 }
+
+// JSON cannot send a Date object, and json-server creates the request ID.
+export type ApiAdoptionRequest = Omit<AdoptionRequest, "id" | "requestedDate"> & {
+    id: string | number;
+    requestedDate?: string;
+};
+
+export type NewAdoptionRequest = Omit<ApiAdoptionRequest, "id">;
 
 export interface ApiResponse<T> {
     success: boolean;
