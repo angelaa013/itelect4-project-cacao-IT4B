@@ -57,6 +57,10 @@ export interface AdoptionRequest {
     status: AdoptionStatus;
     requestedDate?: Date;
     totalFee?: number;
+    applicantEmail?: string;
+    githubProfile?: string;
+    applicantPhone?: string;
+    message?: string;
 }
 
 // JSON cannot send a Date object, and json-server creates the request ID.

@@ -18,7 +18,7 @@ function PetCard({ pet, onAdopt, isCompact = false }: PetCardProps) {
 
     if (isCompact) {
         return (
-            <div className="bg-white dark:bg-[#2B1517] rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 p-4 border-l-4 border-[#FAAB18] border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30">
+            <div className="flex-1 bg-white dark:bg-[#2B1517] rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 p-4 border-l-4 border-[#FAAB18] border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30">
                 <div className="flex items-start justify-between gap-3">
                     <div className="flex-1">
                         <h3 className="text-xl font-black text-[#3D0C02] dark:text-[#FAAB18] mb-1">
@@ -34,7 +34,7 @@ function PetCard({ pet, onAdopt, isCompact = false }: PetCardProps) {
                 </div>
                 <button 
                     onClick={() => onAdopt(pet.name)}
-                    className="mt-3 w-full bg-[#FAAB18] hover:bg-[#e5990b] text-[#3D0C02] font-black py-2.5 px-4 rounded-xl transition-all duration-200 shadow-sm transform active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer border border-[#3D0C02]/20"
+                    className="hidden"
                 >
                     <span className="text-[#FA799F]">❤️</span> Adopt
                 </button>
@@ -43,7 +43,7 @@ function PetCard({ pet, onAdopt, isCompact = false }: PetCardProps) {
     }
 
     return (
-        <div className="bg-white dark:bg-[#2B1517] rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30 flex flex-col justify-between">
+        <div className="flex-1 bg-white dark:bg-[#2B1517] rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30 flex flex-col justify-between">
             <div>
                 {/* Header with Pawhome Warm Amber Accent */}
                 <div className="bg-[#FAAB18] text-[#3D0C02] p-5 border-b border-[#3D0C02]/10">
@@ -88,7 +88,7 @@ function PetCard({ pet, onAdopt, isCompact = false }: PetCardProps) {
             <div className="px-6 pb-6 pt-2">
                 <button 
                     onClick={() => onAdopt(pet.name)}
-                    className="w-full bg-[#FAAB18] hover:bg-[#e5990b] text-[#3D0C02] font-black py-3.5 px-4 rounded-2xl transition-all duration-200 transform hover:scale-[1.02] active:scale-95 shadow-sm hover:shadow-md flex items-center justify-center gap-2 text-base border-2 border-[#3D0C02]/20 cursor-pointer"
+                    className="hidden"
                 >
                     <span className="text-[#FA799F] text-lg">❤️</span> Adopt {pet.name}
                 </button>
@@ -98,4 +98,4 @@ function PetCard({ pet, onAdopt, isCompact = false }: PetCardProps) {
 }
 
 export default PetCard;
-
+
