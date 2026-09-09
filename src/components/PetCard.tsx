@@ -2,11 +2,10 @@ import type { Pet } from "../types";
 
 interface PetCardProps {
     pet: Pet;
-    onAdopt: (petName: string) => void;
     isCompact?: boolean;
 }
 
-function PetCard({ pet, onAdopt, isCompact = false }: PetCardProps) {
+function PetCard({ pet, isCompact = false }: PetCardProps) {
     const petEmojis: Record<string, string> = {
         "dog": "🐕",
         "cat": "🐱",
@@ -32,18 +31,12 @@ function PetCard({ pet, onAdopt, isCompact = false }: PetCardProps) {
                         {pet.gender}
                     </span>
                 </div>
-                <button 
-                    onClick={() => onAdopt(pet.name)}
-                    className="mt-3 w-full bg-[#FAAB18] hover:bg-[#e5990b] text-[#3D0C02] font-black py-2.5 px-4 rounded-xl transition-all duration-200 shadow-sm transform active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer border border-[#3D0C02]/20"
-                >
-                    <span className="text-[#FA799F]">❤️</span> Adopt
-                </button>
             </div>
         );
     }
 
     return (
-        <div className="bg-white dark:bg-[#2B1517] rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30 flex flex-col justify-between">
+        <div className="bg-white dark:bg-[#2B1517] rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30 flex flex-col justify-between h-full">
             <div>
                 {/* Header with Pawhome Warm Amber Accent */}
                 <div className="bg-[#FAAB18] text-[#3D0C02] p-5 border-b border-[#3D0C02]/10">
@@ -83,19 +76,9 @@ function PetCard({ pet, onAdopt, isCompact = false }: PetCardProps) {
                     </div>
                 </div>
             </div>
-
-            {/* Action */}
-            <div className="px-6 pb-6 pt-2">
-                <button 
-                    onClick={() => onAdopt(pet.name)}
-                    className="w-full bg-[#FAAB18] hover:bg-[#e5990b] text-[#3D0C02] font-black py-3.5 px-4 rounded-2xl transition-all duration-200 transform hover:scale-[1.02] active:scale-95 shadow-sm hover:shadow-md flex items-center justify-center gap-2 text-base border-2 border-[#3D0C02]/20 cursor-pointer"
-                >
-                    <span className="text-[#FA799F] text-lg">❤️</span> Adopt {pet.name}
-                </button>
-            </div>
         </div>
     );
 }
 
 export default PetCard;
-
+

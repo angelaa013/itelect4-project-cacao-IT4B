@@ -1,9 +1,18 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { initialPets } from "../data/mockData";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { adoptionRequestSchema, type AdoptionRequestFormData } from "../schemas/adoptionRequestSchema";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import useRequestsStore from "../store/requestsStore";
+import { AdoptionStatus } from "../types";
 
 function PetDetailPage() {
   const { petId } = useParams<{ petId: string }>();
   const navigate = useNavigate();
+  const addRequest = useRequestsStore((state) => state.addRequest);
 
   const pet = initialPets.find((p) => p.id === Number(petId));
 
@@ -16,8 +25,44 @@ function PetDetailPage() {
     navigate("/pets");
   };
 
-  const handleAdopt = () => {
-    alert(`Adoption request submitted for ${pet?.name}! 🐾`);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AdoptionRequestFormData>({
+    resolver: zodResolver(adoptionRequestSchema),
+  });
+
+  const onSubmit = (data: AdoptionRequestFormData) => {
+    console.log("Adoption Request Validated & Submitted:", data);
+    
+    // Get the next incremental ID based on existing requests
+    const requests = useRequestsStore.getState().requests;
+    const nextId = requests.length > 0 
+      ? Math.max(...requests.map(r => r.id)) + 1 
+      : 1;
+
+    // Create new adoption request
+    const newRequest = {
+      id: nextId,
+      petName: pet?.name || "",
+      adopterName: data.adopterName,
+      petId: pet?.id,
+      adopterId: nextId,
+      status: AdoptionStatus.Pending,
+      requestedDate: new Date().toISOString().split('T')[0],
+      totalFee: pet?.adoptionFee || 0,
+      githubUrl: data.githubUrl,
+      address: data.address,
+    };
+
+    // Add request to store
+    addRequest(newRequest);
+
+    alert(`Adoption request submitted for ${pet?.name}! 🐾\nName: ${data.adopterName}`);
+    
+    // Navigate to requests page
+    navigate("/requests");
   };
 
   if (!pet) {
@@ -139,15 +184,44 @@ function PetDetailPage() {
             </div>
           )}
 
-          {/* Adopt Button */}
-          <button
-            id={`adopt-btn-${pet.id}`}
-            onClick={handleAdopt}
-            className="w-full bg-[#FAAB18] hover:bg-[#e5990b] text-[#3D0C02] font-black py-4 px-4 rounded-2xl transition-all duration-200 transform hover:scale-[1.02] active:scale-95 shadow-sm hover:shadow-md flex items-center justify-center gap-2 text-lg border-2 border-[#3D0C02]/20 cursor-pointer"
-          >
-            <span className="text-[#FA799F] text-xl">❤️</span> Adopt{" "}
-            {pet.name}
-          </button>
+          {/* Adopt Form */}
+          <div className="bg-[#FFFDF3] dark:bg-[#1E0C0E] border border-[#3D0C02]/10 dark:border-[#FAAB18]/20 rounded-2xl p-5">
+            <h3 className="text-[13px] font-black uppercase text-[#3D0C02] dark:text-[#FAAB18] tracking-wider mb-4">
+              Adoption Request Form
+            </h3>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="adopterName" className="text-xs font-black uppercase tracking-widest text-[#3D0C02]/80 dark:text-[#FAAB18]/80">Name</Label>
+                <Input id="adopterName" {...register("adopterName")} className="bg-white dark:bg-[#2B1517] border-[#3D0C02]/20 dark:border-[#FAAB18]/40 font-semibold" placeholder="Enter your full name" />
+                {errors.adopterName && <p className="text-red-500 text-xs font-bold mt-1">{errors.adopterName.message}</p>}
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="githubUrl" className="text-xs font-black uppercase tracking-widest text-[#3D0C02]/80 dark:text-[#FAAB18]/80">GitHub Profile</Label>
+                <Input id="githubUrl" type="url" {...register("githubUrl")} className="bg-white dark:bg-[#2B1517] border-[#3D0C02]/20 dark:border-[#FAAB18]/40 font-semibold" placeholder="https://github.com/your-name" />
+                {errors.githubUrl && <p className="text-red-500 text-xs font-bold mt-1">{errors.githubUrl.message}</p>}
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="contact" className="text-xs font-black uppercase tracking-widest text-[#3D0C02]/80 dark:text-[#FAAB18]/80">Contact Number</Label>
+                <Input id="contact" {...register("contact")} className="bg-white dark:bg-[#2B1517] border-[#3D0C02]/20 dark:border-[#FAAB18]/40 font-semibold" placeholder="+639..." />
+                {errors.contact && <p className="text-red-500 text-xs font-bold mt-1">{errors.contact.message}</p>}
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="address" className="text-xs font-black uppercase tracking-widest text-[#3D0C02]/80 dark:text-[#FAAB18]/80">Address</Label>
+                <Input id="address" {...register("address")} className="bg-white dark:bg-[#2B1517] border-[#3D0C02]/20 dark:border-[#FAAB18]/40 font-semibold" placeholder="Enter your full address" />
+                {errors.address && <p className="text-red-500 text-xs font-bold mt-1">{errors.address.message}</p>}
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full bg-[#FAAB18] hover:bg-[#e5990b] text-[#3D0C02] font-black py-6 rounded-xl text-lg mt-2 cursor-pointer transition-all hover:scale-[1.02] active:scale-95"
+              >
+                <span className="text-[#FA799F] text-xl mr-2">❤️</span> Adopt {pet.name}
+              </Button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

@@ -52,8 +52,9 @@ export const initialAdopters: Adopter[] = [
   {
     id: 1,
     name: "Rei Reyes",
-    email: "rei.reyes@email.com",
+    email: "https://github.com/reireyes",
     contact: "09123456789",
+    address: "123 Main St, Manila, Philippines",
   },
 ];
 
@@ -66,5 +67,7 @@ export const initialRequests: AdoptionRequest[] = [
     adopterId: 1,
     status: AdoptionStatus.Pending,
     requestedDate: "2026-08-10",
+    githubUrl: "https://github.com/reireyes",
+    address: "123 Main St, Manila, Philippines",
   },
 ];

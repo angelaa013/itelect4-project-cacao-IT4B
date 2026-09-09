@@ -78,7 +78,7 @@ function AdoptionRequestCard({ request, isCompact = false }: AdoptionRequestCard
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 gap-3">
                         <div className="bg-[#FFF1D6] dark:bg-[#1F140D] border-l-4 border-[#F4A21A] rounded-2xl p-3.5 border border-[#F4A21A]/30">
                             <p className="text-[11px] font-extrabold uppercase text-[#4A3525]/70 dark:text-[#F4A21A] tracking-wider">Adopter</p>
                             <p className="text-[#4A3525] dark:text-[#FFF8EC] font-extrabold mt-1 text-sm">
@@ -87,9 +87,16 @@ function AdoptionRequestCard({ request, isCompact = false }: AdoptionRequestCard
                         </div>
 
                         <div className="bg-[#FFF8EC] dark:bg-[#1F140D] border-l-4 border-[#4A3525] rounded-2xl p-3.5 border border-[#4A3525]/20 dark:border-[#F4A21A]/20">
-                            <p className="text-[11px] font-extrabold uppercase text-[#4A3525]/70 dark:text-[#F4A21A] tracking-wider">Email</p>
-                            <p className="text-[#4A3525] dark:text-[#FFF8EC] font-extrabold mt-1 text-xs truncate">
-                                rei.reyes@email.com
+                            <p className="text-[11px] font-extrabold uppercase text-[#4A3525]/70 dark:text-[#F4A21A] tracking-wider">GitHub</p>
+                            <a href={request.githubUrl || "#"} target="_blank" rel="noopener noreferrer" className="text-[#4A3525] dark:text-[#FFF8EC] font-extrabold mt-1 text-xs break-all hover:underline">
+                                {request.githubUrl || "Not provided"}
+                            </a>
+                        </div>
+
+                        <div className="bg-[#FDE8F0] dark:bg-[#1F140D] border-l-4 border-[#FA799F] rounded-2xl p-3.5 border border-[#FA799F]/30">
+                            <p className="text-[11px] font-extrabold uppercase text-[#FA799F] tracking-wider">Address</p>
+                            <p className="text-[#4A3525] dark:text-[#FFF8EC] font-extrabold mt-1 text-xs break-all">
+                                {request.address || "Not provided"}
                             </p>
                         </div>
                     </div>
@@ -120,4 +127,4 @@ function AdoptionRequestCard({ request, isCompact = false }: AdoptionRequestCard
 }
 
 export default AdoptionRequestCard;
-
+

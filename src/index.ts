@@ -58,7 +58,7 @@ const updatedPet: Partial<Pet> = {
 // Utility Type 2: Pick Adopter (contact info)
 const adopterContact: Pick<Adopter, "name" | "email"> = {
     name: "Rei Reyes",
-    email: "rei.reyes@email.com"
+    email: "https://github.com/reireyes"
 };
 
 const pet: Pet = getPet(1);

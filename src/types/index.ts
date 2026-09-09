@@ -57,6 +57,8 @@ export interface AdoptionRequest {
     status: AdoptionStatus;
     requestedDate?: string;
     totalFee?: number;
+    githubUrl?: string;
+    address?: string;
 }
 
 export interface ApiResponse<T> {

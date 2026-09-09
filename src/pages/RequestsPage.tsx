@@ -1,7 +1,9 @@
 import AdoptionRequestCard from "../components/AdoptionRequestCard";
-import { initialRequests } from "../data/mockData";
+import useRequestsStore from "../store/requestsStore";
 
 function RequestsPage() {
+  const requests = useRequestsStore((state) => state.requests);
+
   return (
     <div>
       {/* Page Header */}
@@ -10,16 +12,16 @@ function RequestsPage() {
           📋 Adoption Requests
         </h1>
         <p className="text-[#3D0C02]/70 dark:text-[#FFFDF3]/70 font-semibold mt-1">
-          {initialRequests.length} request
-          {initialRequests.length !== 1 ? "s" : ""} in the system
+          {requests.length} request
+          {requests.length !== 1 ? "s" : ""} in the system
         </p>
       </div>
 
       {/* Requests Grid */}
       <section>
-        {initialRequests.length > 0 ? (
+        {requests.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {initialRequests.map((request) => (
+            {requests.map((request) => (
               <AdoptionRequestCard key={request.id} request={request} />
             ))}
           </div>
