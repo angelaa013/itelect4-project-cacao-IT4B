@@ -49,9 +49,12 @@ export interface Adopter {
 }
 
 export interface AdoptionRequest {
-    id: number;
+    id: string | number;
     petName?: string;
     adopterName?: string;
+    adopterAddress?: string;
+    adopterContact?: string;
+    adopterGithub?: string;
     petId?: number;
     adopterId?: number;
     status: AdoptionStatus;

@@ -23,11 +23,6 @@ function PetsPage() {
       pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       pet.breed.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  const handleAdopt = (petName: string): void => {
-    alert(`Adoption request submitted for ${petName}! 🐾`);
-  };
-
   const handleViewDetails = (petId: number): void => {
     navigate(`/pets/${petId}`);
   };
@@ -89,9 +84,8 @@ function PetsPage() {
                 <div key={pet.id} className="flex flex-col gap-2">
                   <PetCard
                     pet={pet}
-                  onAdopt={handleAdopt}
-                  isCompact={compactView}
-                />
+                    isCompact={compactView}
+                  />
                 <button
                   id={`view-details-btn-${pet.id}`}
                   onClick={() => handleViewDetails(pet.id)}

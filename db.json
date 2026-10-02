@@ -1,7 +1,7 @@
 {
   "pets": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Buddy",
       "type": "dog",
       "breed": "Golden Retriever",
@@ -12,7 +12,7 @@
       "adoptionFee": 500
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Luna",
       "type": "cat",
       "breed": "Persian Cat",
@@ -23,7 +23,7 @@
       "adoptionFee": 300
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Max",
       "type": "dog",
       "breed": "Labrador Retriever",
@@ -34,7 +34,7 @@
       "adoptionFee": 450
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Mochi",
       "type": "cat",
       "breed": "Scottish Fold",
@@ -47,7 +47,7 @@
   ],
   "adopters": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Rei Reyes",
       "email": "rei.reyes@email.com",
       "contact": "09123456789",
@@ -56,13 +56,34 @@
   ],
   "requests": [
     {
-      "id": 1,
+      "id": "1",
       "petName": "Buddy",
       "adopterName": "Rei Reyes",
       "petId": 1,
       "adopterId": 1,
       "status": "pending",
       "requestedDate": "2026-08-10"
+    },
+    {
+      "petName": "Buddy",
+      "adopterName": "Rei Reyes",
+      "petId": "1",
+      "adopterId": 1,
+      "status": "pending",
+      "requestedDate": "2026-10-02",
+      "id": "HzwQTr4n8DM"
+    },
+    {
+      "petName": "Buddy",
+      "adopterName": "CACAO, PRINCESS ANGELA ASAYA",
+      "adopterAddress": "123",
+      "adopterContact": "09464417742",
+      "adopterGithub": "https://github.com/angelaa013",
+      "petId": "1",
+      "status": "pending",
+      "requestedDate": "2026-10-02",
+      "id": "yXr_R8kA-us"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

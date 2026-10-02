@@ -45,8 +45,8 @@ function RequestsPage() {
           </div>
         ) : filteredRequests.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredRequests.map((request) => (
-              <AdoptionRequestCard key={request.id} request={request} />
+            {filteredRequests.map((request, index) => (
+              <AdoptionRequestCard key={request.id} request={request} displayNumber={index + 1} />
             ))}
           </div>
         ) : (
