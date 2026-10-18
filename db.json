@@ -59,8 +59,8 @@
       "id": "1",
       "petName": "Buddy",
       "adopterName": "Rei Reyes",
-      "petId": 1,
-      "adopterId": 1,
+      "petId": "1",
+      "adopterId": "1",
       "status": "pending",
       "requestedDate": "2026-08-10"
     },
@@ -68,7 +68,7 @@
       "petName": "Buddy",
       "adopterName": "Rei Reyes",
       "petId": "1",
-      "adopterId": 1,
+      "adopterId": "1",
       "status": "pending",
       "requestedDate": "2026-10-02",
       "id": "HzwQTr4n8DM"
@@ -83,7 +83,17 @@
       "status": "pending",
       "requestedDate": "2026-10-02",
       "id": "yXr_R8kA-us"
+    },
+    {
+      "petName": "Buddy",
+      "adopterName": "angea",
+      "adopterAddress": "shshhss",
+      "adopterContact": "09464417742",
+      "adopterGithub": "https://github.com/angelaa013",
+      "petId": "1",
+      "status": "pending",
+      "requestedDate": "2026-10-18",
+      "id": "j4PJXKB8USw"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
