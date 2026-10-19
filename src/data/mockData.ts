@@ -54,10 +54,6 @@ export const mockAdopters: Adopter[] = [
     email: "alex.santos@example.com",
     contact: "09170000001",
     address: "Quezon City",
-    name: "Rei Reyes",
-    email: "https://github.com/reireyes",
-    contact: "09123456789",
-    address: "123 Main St, Manila, Philippines",
   },
 ];
 
@@ -73,8 +69,5 @@ export const mockRequests: AdoptionRequest[] = [
     status: AdoptionStatus.Pending,
     requestedDate: new Date("2026-10-18"),
     totalFee: 500,
-    requestedDate: "2026-08-10",
-    githubUrl: "https://github.com/reireyes",
-    address: "123 Main St, Manila, Philippines",
   },
 ];
