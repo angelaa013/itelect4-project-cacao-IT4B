@@ -23,6 +23,7 @@ function PetsPage() {
       pet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       pet.breed.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
   const handleViewDetails = (petId: number): void => {
     navigate(`/pets/${petId}`);
   };
@@ -86,6 +87,14 @@ function PetsPage() {
                     pet={pet}
                     isCompact={compactView}
                   />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredPets.length > 0 ? (
+            filteredPets.map((pet) => (
+              <div key={pet.id} className="flex flex-col gap-2">
+                <PetCard
+                  pet={pet}
+                  isCompact={compactView}
+                />
                 <button
                   id={`view-details-btn-${pet.id}`}
                   onClick={() => handleViewDetails(pet.id)}

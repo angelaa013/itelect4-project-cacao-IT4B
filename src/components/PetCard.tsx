@@ -37,6 +37,7 @@ function PetCard({ pet, isCompact = false }: PetCardProps) {
 
     return (
         <div className="bg-white dark:bg-[#2B1517] rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30 flex flex-col justify-between">
+        <div className="bg-white dark:bg-[#2B1517] rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30 flex flex-col justify-between h-full">
             <div>
                 {/* Header with Pawhome Warm Amber Accent */}
                 <div className="bg-[#FAAB18] text-[#3D0C02] p-5 border-b border-[#3D0C02]/10">
