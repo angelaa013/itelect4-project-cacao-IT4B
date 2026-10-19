@@ -49,17 +49,28 @@ export interface Adopter {
 }
 
 export interface AdoptionRequest {
-    id: number;
+    id: string | number;
     petName?: string;
     adopterName?: string;
+    adopterAddress?: string;
+    adopterContact?: string;
+    adopterGithub?: string;
     petId?: number;
     adopterId?: number;
     status: AdoptionStatus;
-    requestedDate?: string;
+    requestedDate?: Date;
     totalFee?: number;
     githubUrl?: string;
     address?: string;
 }
+
+// JSON cannot send a Date object, and json-server creates the request ID.
+export type ApiAdoptionRequest = Omit<AdoptionRequest, "id" | "requestedDate"> & {
+    id: string | number;
+    requestedDate?: string;
+};
+
+export type NewAdoptionRequest = Omit<ApiAdoptionRequest, "id">;
 
 export interface ApiResponse<T> {
     success: boolean;

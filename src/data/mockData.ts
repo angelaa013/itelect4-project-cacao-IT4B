@@ -1,7 +1,6 @@
-import { PetType, Gender, AdoptionStatus } from "../types";
-import type { Pet, Adopter, AdoptionRequest } from "../types";
+import { AdoptionStatus, Gender, PetType, type AdoptionRequest, type Adopter, type Pet } from "../types";
 
-export const initialPets: Pet[] = [
+export const mockPets: Pet[] = [
   {
     id: 1,
     name: "Buddy",
@@ -48,9 +47,13 @@ export const initialPets: Pet[] = [
   },
 ];
 
-export const initialAdopters: Adopter[] = [
+export const mockAdopters: Adopter[] = [
   {
     id: 1,
+    name: "Alex Santos",
+    email: "alex.santos@example.com",
+    contact: "09170000001",
+    address: "Quezon City",
     name: "Rei Reyes",
     email: "https://github.com/reireyes",
     contact: "09123456789",
@@ -58,14 +61,18 @@ export const initialAdopters: Adopter[] = [
   },
 ];
 
-export const initialRequests: AdoptionRequest[] = [
+export const mockRequests: AdoptionRequest[] = [
   {
-    id: 1,
-    petName: "Buddy",
-    adopterName: "Rei Reyes",
+    id: "mock-request-1",
     petId: 1,
+    petName: "Buddy",
     adopterId: 1,
+    adopterName: "Alex Santos",
+    adopterAddress: "Quezon City",
+    adopterContact: "09170000001",
     status: AdoptionStatus.Pending,
+    requestedDate: new Date("2026-10-18"),
+    totalFee: 500,
     requestedDate: "2026-08-10",
     githubUrl: "https://github.com/reireyes",
     address: "123 Main St, Manila, Philippines",

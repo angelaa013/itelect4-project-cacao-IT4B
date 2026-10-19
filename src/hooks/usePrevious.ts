@@ -1,13 +1,15 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// Generic T with explicit return type T | undefined
 function usePrevious<T>(value: T): T | undefined {
-  const ref = useRef<T | undefined>(undefined);
+  const [previous, setPrevious] = useState<T | undefined>(undefined);
+  const currentValueRef = useRef(value);
 
   useEffect(() => {
-    ref.current = value;
+    setPrevious(currentValueRef.current);
+    currentValueRef.current = value;
   }, [value]);
 
+  return previous;
   // eslint-disable-next-line react-hooks/refs
   return ref.current;
 }
