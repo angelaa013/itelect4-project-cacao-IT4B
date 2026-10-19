@@ -1,6 +1,7 @@
 import type { Pet, Adopter, AdoptionRequest, ApiAdoptionRequest, NewAdoptionRequest } from "../types";
 
-const API_BASE_URL = "/api";
+const API_ORIGIN = (import.meta.env.VITE_API_URL ?? "").replace(/\/+$/, "");
+const API_BASE_URL = `${API_ORIGIN}/api`;
 
 const toAdoptionRequest = (request: ApiAdoptionRequest): AdoptionRequest => ({
   ...request,
