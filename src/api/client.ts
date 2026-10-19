@@ -1,7 +1,10 @@
 import type { Pet, Adopter, AdoptionRequest, ApiAdoptionRequest, NewAdoptionRequest } from "../types";
+import { mockAdopters, mockPets, mockRequests } from "../data/mockData";
 
 const API_ORIGIN = (import.meta.env.VITE_API_URL ?? "").replace(/\/+$/, "");
 const API_BASE_URL = `${API_ORIGIN}/api`;
+const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA === "true";
+const MOCK_REQUESTS_STORAGE_KEY = "pawhome.mock.requests";
 
 const toAdoptionRequest = (request: ApiAdoptionRequest): AdoptionRequest => ({
   ...request,
@@ -9,7 +12,32 @@ const toAdoptionRequest = (request: ApiAdoptionRequest): AdoptionRequest => ({
   requestedDate: request.requestedDate ? new Date(request.requestedDate) : undefined,
 });
 
+const toApiAdoptionRequest = (request: AdoptionRequest): ApiAdoptionRequest => ({
+  ...request,
+  requestedDate: request.requestedDate?.toISOString().slice(0, 10),
+});
+
+const readMockRequests = (): ApiAdoptionRequest[] => {
+  if (typeof window === "undefined") {
+    return mockRequests.map(toApiAdoptionRequest);
+  }
+
+  const storedRequests = window.localStorage.getItem(MOCK_REQUESTS_STORAGE_KEY);
+  if (!storedRequests) {
+    return mockRequests.map(toApiAdoptionRequest);
+  }
+
+  try {
+    const parsed: unknown = JSON.parse(storedRequests);
+    return Array.isArray(parsed) ? (parsed as ApiAdoptionRequest[]) : mockRequests.map(toApiAdoptionRequest);
+  } catch {
+    return mockRequests.map(toApiAdoptionRequest);
+  }
+};
+
 export const getPets = async (): Promise<Pet[]> => {
+  if (USE_MOCK_DATA) return [...mockPets];
+
   const response = await fetch(`${API_BASE_URL}/pets`);
   if (!response.ok) {
     throw new Error("Failed to fetch pets");
@@ -18,6 +46,12 @@ export const getPets = async (): Promise<Pet[]> => {
 };
 
 export const getPetById = async (id: number): Promise<Pet> => {
+  if (USE_MOCK_DATA) {
+    const pet = mockPets.find((item) => item.id === id);
+    if (!pet) throw new Error("Pet not found");
+    return pet;
+  }
+
   const response = await fetch(`${API_BASE_URL}/pets/${id}`);
   if (!response.ok) {
     throw new Error("Failed to fetch pet details");
@@ -26,6 +60,8 @@ export const getPetById = async (id: number): Promise<Pet> => {
 };
 
 export const getAdopters = async (): Promise<Adopter[]> => {
+  if (USE_MOCK_DATA) return [...mockAdopters];
+
   const response = await fetch(`${API_BASE_URL}/adopters`);
   if (!response.ok) {
     throw new Error("Failed to fetch adopters");
@@ -34,6 +70,8 @@ export const getAdopters = async (): Promise<Adopter[]> => {
 };
 
 export const getRequests = async (): Promise<AdoptionRequest[]> => {
+  if (USE_MOCK_DATA) return readMockRequests().map(toAdoptionRequest);
+
   const response = await fetch(`${API_BASE_URL}/requests`);
   if (!response.ok) {
     throw new Error("Failed to fetch requests");
@@ -43,6 +81,17 @@ export const getRequests = async (): Promise<AdoptionRequest[]> => {
 };
 
 export const createAdoptionRequest = async (data: NewAdoptionRequest): Promise<AdoptionRequest> => {
+  if (USE_MOCK_DATA) {
+    const request: ApiAdoptionRequest = {
+      ...data,
+      id: `mock-request-${Date.now()}`,
+      requestedDate: data.requestedDate ?? new Date().toISOString().slice(0, 10),
+    };
+    const requests = [request, ...readMockRequests()];
+    window.localStorage.setItem(MOCK_REQUESTS_STORAGE_KEY, JSON.stringify(requests));
+    return toAdoptionRequest(request);
+  }
+
   const response = await fetch(`${API_BASE_URL}/requests`, {
     method: "POST",
     headers: {
