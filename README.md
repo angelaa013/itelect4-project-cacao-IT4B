@@ -1,15 +1,20 @@
-# React + TypeScript + Vite
+# PAWHOME — Pet Adoption Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PAWHOME is a React and TypeScript web app for browsing pets, viewing adopters, and managing adoption requests.
 
-Currently, two official plugins are available:
+## Live backend
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Backend website/API root: https://itelect4-backend-cacao.vercel.app/
+- Health check: https://itelect4-backend-cacao.vercel.app/api/health
+- Pets: https://itelect4-backend-cacao.vercel.app/api/pets
+- Adopters: https://itelect4-backend-cacao.vercel.app/api/adopters
+- Adoption requests: https://itelect4-backend-cacao.vercel.app/api/requests
 
-## React Compiler
+The API root may show a small status message. Use the `/api/...` endpoints to access data.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Current frontend data behavior
+
+The current frontend pages use built-in sample data from `src/data/mockData.ts`. They do not yet fetch their pets, adopters, or requests from the deployed backend. The API links above let you check the backend separately.
 
 ## Expanding the ESLint configuration
 
