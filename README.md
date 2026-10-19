@@ -1,60 +1,60 @@
 # PAWHOME — Pet Adoption Frontend
 
-PAWHOME is a React single-page application for browsing pets and viewing adopters and adoption requests. The frontend uses React Router for navigation, TanStack Query for data loading, Zustand for session and UI state, and Tailwind CSS for styling.
+PAWHOME is a React and TypeScript web app for browsing pets, viewing adopters, and managing adoption requests.
+
+## Live frontend
+
+- Frontend: https://itelect4-project-cacao-it-4-b.vercel.app/
+
+## Current frontend data behavior
+
+The current frontend pages use built-in sample data from `src/data/mockData.ts`. They do not yet fetch their pets, adopters, or requests from the deployed backend. The API links above let you check the backend separately.
 
 ## Features
 
-- Home and login pages
-- Protected pet list, pet detail, adopter, and adoption request pages
-- Search and compact view on the pet list
-- Adoption request submission
-- Optional built-in mock data for development or demos; no `db.json` or JSON Server is required
-
-The login is currently mock authentication: any non-empty username and password will sign in. It does not authenticate against the backend.
+- Home, login, pets, pet details, adopters, and adoption requests pages
+- Protected routes for the app pages
+- Sample login for demonstration; the login page accepts mock credentials
+- Vite development server and production build
 
 ## Requirements
 
-- Node.js 20.19+ or 22.12+
+- Node.js 20 or later
 - npm
-- The Cacao backend running locally, or a deployed backend URL
 
-## Local development
+## Run locally
+
+From the frontend repository root:
 
 ```bash
 npm install
 npm run dev
 ```
 
-By default, Vite proxies `/api` requests to `http://127.0.0.1:4000`. Start the backend separately on port 4000 to use MongoDB data.
-
-To run the frontend with sample data instead, create `.env.local` in the project root:
-
-```env
-VITE_USE_MOCK_DATA=true
-```
-
-Restart the Vite dev server after changing environment variables. Mock adoption requests are saved in the current browser's local storage; they are not sent to MongoDB or shared with other browsers.
-
-## Environment variables
-
-Copy `.env.example` to `.env.local` for local overrides.
-
-| Variable | Purpose | Default |
-| --- | --- | --- |
-| `VITE_API_URL` | Backend origin, with no `/api` suffix. Leave blank locally to use the Vite proxy. | blank |
-| `VITE_USE_MOCK_DATA` | Set to `true` to use the bundled sample pets, adopters, and requests instead of the API. | `false` |
-
-For Vercel, set `VITE_API_URL` to the deployed backend origin and `VITE_USE_MOCK_DATA` to `false` to use the API. Set `VITE_USE_MOCK_DATA` to `true` only when intentionally demonstrating sample data. Vite embeds these values during the build, so redeploy after changing them.
+Vite prints the local URL, usually `http://localhost:5173`.
 
 ## Available scripts
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start the Vite development server. |
-| `npm run build` | Type-check and build the production frontend. |
-| `npm run lint` | Run ESLint. |
-| `npm run preview` | Serve the production build locally. |
+```bash
+npm run dev      # Start the local Vite server
+npm run build    # Type-check and build the production site
+npm run preview  # Preview the production build locally
+npm run lint     # Run ESLint
+npm run api      # Run the local JSON Server using db.json on port 3001
+```
 
-## Deployment
+## Deploy to Vercel
 
-Import this repository into Vercel as a Vite project. Use `npm run build` as the build command and `dist` as the output directory. Set the required Vite environment variables in the Vercel project and redeploy after changing them.
+Import the frontend GitHub repository as a separate Vercel project. The project root should be the folder containing this `package.json`; select the Vite preset if Vercel does not detect it automatically.
+
+The build command is `npm run build`, and the output directory is `dist`. Redeploy after pushing frontend changes.
+
+## Project structure
+
+- `src/pages/` — application pages
+- `src/components/` — shared UI and layout components
+- `src/data/mockData.ts` — sample frontend data
+- `src/store/` — authentication and request state
+- `db.json` — local JSON Server data file
+
+Do not commit passwords, database connection strings, or other secrets.
