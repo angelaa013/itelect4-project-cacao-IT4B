@@ -19,10 +19,6 @@ function RequestsPage() {
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading requests</div>;
-import useRequestsStore from "../store/requestsStore";
-
-function RequestsPage() {
-  const requests = useRequestsStore((state) => state.requests);
 
   return (
     <div>
@@ -34,8 +30,6 @@ function RequestsPage() {
         <p className="text-[#3D0C02]/70 dark:text-[#FFFDF3]/70 font-semibold mt-1">
           {filteredRequests.length} request
           {filteredRequests.length !== 1 ? "s" : ""} in the system
-          {requests.length} request
-          {requests.length !== 1 ? "s" : ""} in the system
         </p>
       </div>
 
@@ -53,10 +47,6 @@ function RequestsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredRequests.map((request, index) => (
               <AdoptionRequestCard key={request.id} request={request} displayNumber={index + 1} />
-        {requests.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {requests.map((request) => (
-              <AdoptionRequestCard key={request.id} request={request} />
             ))}
           </div>
         ) : (

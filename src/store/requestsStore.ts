@@ -16,7 +16,7 @@ const useRequestsStore = create<RequestsState>((set) => ({
       petId: 1,
       adopterId: 1,
       status: AdoptionStatus.Pending,
-      requestedDate: "2026-08-10",
+      requestedDate: new Date("2026-08-10"),
       githubUrl: "https://github.com/reireyes",
       address: "123 Main St, Manila, Philippines",
     },
