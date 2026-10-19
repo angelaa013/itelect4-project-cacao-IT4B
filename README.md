@@ -1,60 +1,75 @@
-# PAWHOME — Pet Adoption Frontend
+# React + TypeScript + Vite
 
-PAWHOME is a React and TypeScript web app for browsing pets, viewing adopters, and managing adoption requests.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Live frontend
+Currently, two official plugins are available:
 
-- Frontend: https://itelect4-project-cacao-it-4-b.vercel.app/
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Current frontend data behavior
+## React Compiler
 
-The current frontend pages use built-in sample data from `src/data/mockData.ts`. They do not yet fetch their pets, adopters, or requests from the deployed backend. The API links above let you check the backend separately.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Features
+## Expanding the ESLint configuration
 
-- Home, login, pets, pet details, adopters, and adoption requests pages
-- Protected routes for the app pages
-- Sample login for demonstration; the login page accepts mock credentials
-- Vite development server and production build
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## Requirements
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-- Node.js 20 or later
-- npm
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## Run locally
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 
-From the frontend repository root:
-
-```bash
-npm install
-npm run dev
 ```
 
-Vite prints the local URL, usually `http://localhost:5173`.
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## Available scripts
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-```bash
-npm run dev      # Start the local Vite server
-npm run build    # Type-check and build the production site
-npm run preview  # Preview the production build locally
-npm run lint     # Run ESLint
-npm run api      # Run the local JSON Server using db.json on port 3001
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+
 ```
-
-## Deploy to Vercel
-
-Import the frontend GitHub repository as a separate Vercel project. The project root should be the folder containing this `package.json`; select the Vite preset if Vercel does not detect it automatically.
-
-The build command is `npm run build`, and the output directory is `dist`. Redeploy after pushing frontend changes.
-
-## Project structure
-
-- `src/pages/` — application pages
-- `src/components/` — shared UI and layout components
-- `src/data/mockData.ts` — sample frontend data
-- `src/store/` — authentication and request state
-- `db.json` — local JSON Server data file
-
-Do not commit passwords, database connection strings, or other secrets.
