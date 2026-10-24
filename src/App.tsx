@@ -10,6 +10,7 @@ import PetDetailPage from "./pages/PetDetailPage";
 import AdoptersPage from "./pages/AdoptersPage";
 import RequestsPage from "./pages/RequestsPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import ReviewPage from "./pages/ReviewPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/pets/:petId" element={<PetDetailPage />} />
           <Route path="/adopters" element={<AdoptersPage />} />
           <Route path="/requests" element={<RequestsPage />} />
+          <Route path="/review" element={<ReviewPage />} />
         </Route>
 
         {/* Catch-all – no URL gives a blank page */}
