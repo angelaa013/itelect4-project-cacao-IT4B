@@ -77,3 +77,10 @@ export interface ApiResponse<T> {
     message: string;
     data: T;
 }
+
+export interface AiReview {
+    summary: string;
+    strengths: string[];
+    improvements: string[];
+    readiness: "ready" | "almost" | "not-yet";
+}
