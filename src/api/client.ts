@@ -154,9 +154,22 @@ export const askAi = async (prompt: string): Promise<AiReview> => {
     body: JSON.stringify({ prompt }),
   });
 
+  const result: unknown = await response.json().catch(() => null);
+
   if (!response.ok) {
-    throw new Error("Failed to get AI review");
+    const body =
+      typeof result === "object" && result !== null
+        ? (result as { error?: unknown; detail?: unknown })
+        : undefined;
+    const message =
+      typeof body?.error === "string"
+        ? body.error
+        : `AI review failed (HTTP ${response.status})`;
+    const detail = typeof body?.detail === "string" ? body.detail : undefined;
+
+    throw new Error(detail ? `${message} ${detail}` : message);
   }
 
-  return response.json();
+  return result as AiReview;
 };
+
