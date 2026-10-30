@@ -7,8 +7,13 @@ import type {
   AiReview,
 } from "../types";
 import { mockAdopters, mockPets, mockRequests } from "../data/mockData";
+import useAuthStore from "../store/authStore";
 
-const API_ORIGIN = (import.meta.env.VITE_API_URL ?? "").replace(/\/+$/, "");
+const configuredApiOrigin = import.meta.env.VITE_API_URL?.trim() ?? "";
+const API_ORIGIN = (
+  configuredApiOrigin ||
+  (import.meta.env.DEV ? "" : "https://itelect4-backend-cacao.vercel.app")
+).replace(/\/+$/, "");
 const API_BASE_URL = `${API_ORIGIN}/api`;
 const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA === "true";
 const MOCK_REQUESTS_STORAGE_KEY = "pawhome.mock.requests";
@@ -145,18 +150,60 @@ export const createAdoptionRequest = async (
   return toAdoptionRequest(createdRequest);
 };
 
-export const askAi = async (prompt: string): Promise<AiReview> => {
-  const response = await fetch(`${API_BASE_URL}/ai`, {
+export const login = async (username: string, password: string): Promise<string> => {
+  const response = await fetch(`${API_BASE_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    body: JSON.stringify({ username, password }),
+  });
+  const payload = (await response.json().catch(() => null)) as
+    | { token?: unknown; error?: unknown }
+    | null;
+
+  if (!response.ok) {
+    throw new Error(
+      typeof payload?.error === "string" ? payload.error : "Failed to sign in",
+    );
+  }
+
+  if (typeof payload?.token !== "string") {
+    throw new Error("The server did not return a login token");
+  }
+
+  return payload.token;
+};
+
+export const askAi = async (prompt: string): Promise<AiReview> => {
+  const token = useAuthStore.getState().token;
+  const response = await fetch(`${API_BASE_URL}/ai`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
     body: JSON.stringify({ prompt }),
   });
 
+  const payload = (await response.json().catch(() => null)) as
+    | { error?: unknown }
+    | null;
+
   if (!response.ok) {
-    throw new Error("Failed to get AI review");
+    if (response.status === 401) {
+      useAuthStore.getState().logout();
+      throw new Error("Your login expired. Please sign in again.");
+    }
+
+    throw new Error(
+      typeof payload?.error === "string"
+        ? payload.error
+        : "Failed to get AI review",
+    );
   }
 
-  return response.json();
+  return payload as AiReview;
 };
+
+

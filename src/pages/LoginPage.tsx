@@ -1,14 +1,18 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { login as loginWithCredentials } from "../api/client";
 import useAuthStore from "../store/authStore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+const DEMO_USERNAME = "Angela1";
+const DEMO_PASSWORD = "password123";
+
 function LoginPage() {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>(DEMO_USERNAME);
+  const [password, setPassword] = useState<string>(DEMO_PASSWORD);
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -27,9 +31,13 @@ function LoginPage() {
     setIsSubmitting(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      login(`mock-token-${Date.now()}`);
+      const token = await loginWithCredentials(username.trim(), password);
+      login(token);
       navigate("/", { replace: true });
+    } catch (loginError) {
+      setError(
+        loginError instanceof Error ? loginError.message : "Sign in failed.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -112,10 +120,7 @@ function LoginPage() {
               🔑 Sign In to PAWHOME
             </Button>
 
-            <p className="text-center text-[#3D0C02]/50 dark:text-[#FFFDF3]/50 text-xs font-semibold">
-              Use any username & password to log in (mock auth)
-            </p>
-          </form>
+</form>
         </div>
       </div>
     </div>
@@ -123,3 +128,8 @@ function LoginPage() {
 }
 
 export default LoginPage;
+
+
+
+
+
