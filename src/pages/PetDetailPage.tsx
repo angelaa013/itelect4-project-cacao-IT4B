@@ -1,3 +1,4 @@
+import { useState, type FormEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -8,11 +9,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { adoptionRequestSchema, type AdoptionRequestFormValues } from "@/schemas/adoptionRequestSchema";
 import { AdoptionStatus, type Pet } from "@/types";
+import { getPetById, createAdoptionRequest } from "../api/client";
+import { AdoptionStatus, type Pet } from "../types";
 
 function PetDetailPage() {
   const { petId } = useParams<{ petId: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [adopterName, setAdopterName] = useState("");
+  const [adopterAddress, setAdopterAddress] = useState("");
+  const [adopterContact, setAdopterContact] = useState("");
+  const [adopterGithub, setAdopterGithub] = useState("");
 
   const { data: pet, isLoading, isError } = useQuery<Pet>({
     queryKey: ['pet', petId],
@@ -56,6 +63,20 @@ function PetDetailPage() {
       applicantPhone: values.phone,
       message: values.message,
     });
+  const handleAdopt = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (pet) {
+      mutation.mutate({
+        petName: pet.name,
+        adopterName: adopterName.trim(),
+        adopterAddress: adopterAddress.trim(),
+        adopterContact: adopterContact.trim(),
+        adopterGithub: adopterGithub.trim(),
+        petId: pet.id,
+        status: AdoptionStatus.Pending,
+        requestedDate: new Date().toISOString().split('T')[0],
+      });
+    }
   };
 
   if (isLoading) {
@@ -210,6 +231,31 @@ function PetDetailPage() {
             <Button id={`adopt-btn-${pet.id}`} type="submit" size="lg" disabled={mutation.isPending} className="w-full font-black text-lg">
               {mutation.isPending ? "Submitting..." : `Adopt ${pet.name}`}
             </Button>
+          <form onSubmit={handleAdopt} className="space-y-4 rounded-2xl border-2 border-[#FAAB18]/40 bg-[#FFFDF3] dark:bg-[#1E0C0E] p-5">
+            <div>
+              <h2 className="text-xl font-black text-[#3D0C02] dark:text-[#FFFDF3]">Your adoption details</h2>
+              <p className="mt-1 text-sm font-semibold text-[#3D0C02]/70 dark:text-[#FFFDF3]/70">Please provide your contact information to submit an adoption request.</p>
+            </div>
+            <label className="block text-sm font-bold text-[#3D0C02] dark:text-[#FFFDF3]">
+              Full name
+              <input required autoComplete="name" value={adopterName} onChange={(event) => setAdopterName(event.target.value)} className="mt-1 w-full rounded-xl border border-[#3D0C02]/20 bg-white px-4 py-3 font-medium outline-none focus:border-[#FAAB18] dark:bg-[#2B1517]" />
+            </label>
+            <label className="block text-sm font-bold text-[#3D0C02] dark:text-[#FFFDF3]">
+              Address
+              <textarea required autoComplete="street-address" value={adopterAddress} onChange={(event) => setAdopterAddress(event.target.value)} rows={2} className="mt-1 w-full rounded-xl border border-[#3D0C02]/20 bg-white px-4 py-3 font-medium outline-none focus:border-[#FAAB18] dark:bg-[#2B1517]" />
+            </label>
+            <label className="block text-sm font-bold text-[#3D0C02] dark:text-[#FFFDF3]">
+              Philippine contact number
+              <input required type="tel" autoComplete="tel" inputMode="tel" pattern="(?:\+63|0)9[0-9]{9}" title="Enter 09 followed by 9 digits, or +639 followed by 9 digits." placeholder="09XXXXXXXXX or +639XXXXXXXXX" value={adopterContact} onChange={(event) => setAdopterContact(event.target.value)} className="mt-1 w-full rounded-xl border border-[#3D0C02]/20 bg-white px-4 py-3 font-medium outline-none focus:border-[#FAAB18] dark:bg-[#2B1517]" />
+            </label>
+            <label className="block text-sm font-bold text-[#3D0C02] dark:text-[#FFFDF3]">
+              GitHub profile URL
+              <input required type="url" pattern="https?://(www\.)?github\.com/[A-Za-z0-9-]+/?" title="Enter your GitHub profile URL, for example https://github.com/your-name" placeholder="https://github.com/your-name" value={adopterGithub} onChange={(event) => setAdopterGithub(event.target.value)} className="mt-1 w-full rounded-xl border border-[#3D0C02]/20 bg-white px-4 py-3 font-medium outline-none focus:border-[#FAAB18] dark:bg-[#2B1517]" />
+            </label>
+            {mutation.isError && <p role="alert" className="text-sm font-bold text-red-600">Could not submit your request. Please try again.</p>}
+            <button id={`adopt-btn-${pet.id}`} type="submit" disabled={mutation.isPending} className="w-full bg-[#FAAB18] hover:bg-[#e5990b] disabled:opacity-60 text-[#3D0C02] font-black py-4 px-4 rounded-2xl transition-all duration-200 shadow-sm flex items-center justify-center gap-2 text-lg border-2 border-[#3D0C02]/20 cursor-pointer">
+              {mutation.isPending ? "Submitting..." : `Adopt ${pet.name}`}
+            </button>
           </form>
         </div>
       </div>

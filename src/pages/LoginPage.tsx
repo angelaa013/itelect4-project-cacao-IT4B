@@ -10,23 +10,29 @@ function LoginPage() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setError("");
 
-    // Simple mock auth – any non-empty credentials work
     if (!username.trim() || !password.trim()) {
       setError("Please enter both username and password.");
       return;
     }
 
-    // Store token and redirect
-    login(`mock-token-${Date.now()}`);
-    navigate("/", { replace: true });
+    setIsSubmitting(true);
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 600));
+      login(`mock-token-${Date.now()}`);
+      navigate("/", { replace: true });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -52,10 +58,11 @@ function LoginPage() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="p-8 space-y-5">
             {error && (
-              <div className="bg-[#FDE8F0] dark:bg-[#1E0C0E] border-2 border-[#FA799F] rounded-2xl p-4 text-center">
-                <p className="text-[#3D0C02] dark:text-[#FA799F] font-black text-sm">
-                  ⚠️ {error}
-                </p>
+              <div
+                aria-live="polite"
+                className="border-2 border-[#FCA5A5] bg-[#FEF2F2] text-[#991B1B] rounded-2xl p-4 text-center shadow-sm dark:border-[#FA799F]/60 dark:bg-[#2B1517] dark:text-[#FFD1DC]"
+              >
+                <p className="font-black text-sm">⚠️ {error}</p>
               </div>
             )}
 
@@ -72,7 +79,7 @@ function LoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter your username"
-                className="w-full px-5 py-3.5 bg-[#FFFDF3] dark:bg-[#1E0C0E] border-2 border-[#3D0C02]/20 dark:border-[#FAAB18]/40 text-[#3D0C02] dark:text-[#FFFDF3] placeholder-[#3D0C02]/50 dark:placeholder-[#FFFDF3]/40 rounded-2xl focus:outline-none focus:border-[#FAAB18] transition-colors font-extrabold"
+                className="w-full px-5 py-6 bg-[#FFFDF3] dark:bg-[#1E0C0E] border-2 border-[#3D0C02]/20 dark:border-[#FAAB18]/40 text-[#3D0C02] dark:text-[#FFFDF3] placeholder-[#3D0C02]/50 dark:placeholder-[#FFFDF3]/40 rounded-2xl focus:outline-none focus:border-[#FAAB18] transition-colors font-extrabold"
               />
             </div>
 
@@ -89,14 +96,18 @@ function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="w-full px-5 py-3.5 bg-[#FFFDF3] dark:bg-[#1E0C0E] border-2 border-[#3D0C02]/20 dark:border-[#FAAB18]/40 text-[#3D0C02] dark:text-[#FFFDF3] placeholder-[#3D0C02]/50 dark:placeholder-[#FFFDF3]/40 rounded-2xl focus:outline-none focus:border-[#FAAB18] transition-colors font-extrabold"
+                className="w-full px-5 py-6 bg-[#FFFDF3] dark:bg-[#1E0C0E] border-2 border-[#3D0C02]/20 dark:border-[#FAAB18]/40 text-[#3D0C02] dark:text-[#FFFDF3] placeholder-[#3D0C02]/50 dark:placeholder-[#FFFDF3]/40 rounded-2xl focus:outline-none focus:border-[#FAAB18] transition-colors font-extrabold"
               />
             </div>
 
             <Button
               id="login-submit-btn"
               type="submit"
-              className="w-full bg-[#FAAB18] hover:bg-[#e5990b] text-[#3D0C02] font-black py-4 px-4 rounded-2xl transition-all duration-200 transform hover:scale-[1.02] active:scale-95 shadow-sm hover:shadow-md text-base border-2 border-[#3D0C02]/20 cursor-pointer"
+              variant="secondary"
+              size="lg"
+              isLoading={isSubmitting}
+              loadingText="Signing in..."
+              className="w-full bg-[#FAAB18] hover:bg-[#e5990b] text-[#3D0C02] font-black py-6 rounded-2xl transition-all duration-200 transform hover:scale-[1.02] active:scale-95 shadow-sm hover:shadow-md text-base border-2 border-[#3D0C02]/20 cursor-pointer"
             >
               🔑 Sign In to PAWHOME
             </Button>

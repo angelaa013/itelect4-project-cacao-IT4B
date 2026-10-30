@@ -9,6 +9,11 @@ interface AdoptionRequestCardProps {
 
 function AdoptionRequestCard({ request: apiRequest, requestNumber, isCompact = false }: AdoptionRequestCardProps) {
     const request = { ...apiRequest, id: requestNumber };
+    displayNumber?: number;
+    isCompact?: boolean;
+}
+
+function AdoptionRequestCard({ request, displayNumber = Number(request.id), isCompact = false }: AdoptionRequestCardProps) {
     const getStatusColor = (status: AdoptionStatus) => {
         switch (status) {
             case AdoptionStatus.Approved:
@@ -43,6 +48,7 @@ function AdoptionRequestCard({ request: apiRequest, requestNumber, isCompact = f
             <div className="bg-[#FFFDF7] dark:bg-[#2D1F15] rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 p-4 border-r-4 border-[#F4A21A] border-2 border-[#4A3525]/10 dark:border-[#F4A21A]/30">
                 <h3 className="text-lg font-extrabold text-[#4A3525] dark:text-[#F4A21A] mb-2">
                     📋 Request #{request.id}
+                    📋 Request #{displayNumber}
                 </h3>
                 <div className="space-y-1.5 text-sm font-semibold text-[#4A3525]/80 dark:text-[#FFF8EC]/80 mb-3">
                     <p><span>🐾</span> {request.petName}</p>
@@ -65,6 +71,7 @@ function AdoptionRequestCard({ request: apiRequest, requestNumber, isCompact = f
                             <span className="text-3xl bg-[#F4A21A] text-[#4A3525] p-2.5 rounded-2xl shadow-sm">📋</span>
                             <div>
                                 <h3 className="text-2xl font-extrabold text-[#4A3525] dark:text-[#F4A21A] tracking-tight">Request #{requestNumber}</h3>
+                                <h3 className="text-2xl font-extrabold text-[#4A3525] dark:text-[#F4A21A] tracking-tight">Request #{displayNumber}</h3>
                                 <p className="text-[#C78208] dark:text-[#FA799F] text-xs font-extrabold uppercase tracking-wider">Adoption Details</p>
                             </div>
                         </div>
@@ -92,9 +99,19 @@ function AdoptionRequestCard({ request: apiRequest, requestNumber, isCompact = f
                             <p className="text-[11px] font-extrabold uppercase text-[#4A3525]/70 dark:text-[#F4A21A] tracking-wider">GitHub profile</p>
                             <p className="text-[#4A3525] dark:text-[#FFF8EC] font-extrabold mt-1 text-xs break-all">
                                 {request.githubProfile ?? "Not provided"}
+                            <p className="text-[11px] font-extrabold uppercase text-[#4A3525]/70 dark:text-[#F4A21A] tracking-wider">Contact number</p>
+                            <p className="text-[#4A3525] dark:text-[#FFF8EC] font-extrabold mt-1 text-xs truncate">
+                                {request.adopterContact ?? "Not provided"}
                             </p>
                         </div>
                     </div>
+
+                    {(request.adopterAddress || request.adopterGithub) && (
+                        <div className="space-y-3 rounded-2xl border border-[#F4A21A]/30 bg-[#FFF8EC] dark:bg-[#1F140D] p-4 text-sm text-[#4A3525] dark:text-[#FFF8EC]">
+                            {request.adopterAddress && <p className="break-words"><span className="font-extrabold">Address: </span>{request.adopterAddress}</p>}
+                            {request.adopterGithub && <p><span className="font-extrabold">GitHub: </span><a className="break-all text-[#9A5B00] underline dark:text-[#FAAB18]" href={request.adopterGithub} target="_blank" rel="noreferrer">{request.adopterGithub}</a></p>}
+                        </div>
+                    )}
 
                     {/* Status Badge */}
                     <div className={`rounded-2xl p-4 border-2 ${statusColor} text-center shadow-sm`}>
@@ -111,6 +128,7 @@ function AdoptionRequestCard({ request: apiRequest, requestNumber, isCompact = f
                 <div className="flex items-center justify-between text-sm">
                     <span className="text-[#4A3525]/80 dark:text-[#FFF8EC]/80 font-bold">
                         Request number: <span className="font-extrabold">#{requestNumber}</span>
+                        Request ID: <span className="font-extrabold">#{displayNumber}</span>
                     </span>
                     <span className="inline-flex items-center gap-1 bg-[#FFF1D6] dark:bg-[#1F140D] text-[#4A3525] dark:text-[#F4A21A] px-3 py-1 rounded-full text-xs font-extrabold border border-[#F4A21A]/40">
                         🔔 In Progress

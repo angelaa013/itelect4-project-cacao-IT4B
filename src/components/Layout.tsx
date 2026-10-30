@@ -62,6 +62,9 @@ function Layout() {
               <NavLink to="/requests" className={navLinkClass}>
                 📋 Requests
               </NavLink>
+              <NavLink to="/review" className={navLinkClass}>
+                🤖 AI Review
+              </NavLink>
 
               {/* Dark Mode Toggle */}
               <button
@@ -110,3 +113,5 @@ function Layout() {
 }
 
 export default Layout;
+
+

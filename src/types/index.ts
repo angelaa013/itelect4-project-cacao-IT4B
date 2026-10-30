@@ -49,9 +49,12 @@ export interface Adopter {
 }
 
 export interface AdoptionRequest {
-    id: number;
+    id: string | number;
     petName?: string;
     adopterName?: string;
+    adopterAddress?: string;
+    adopterContact?: string;
+    adopterGithub?: string;
     petId?: number;
     adopterId?: number;
     status: AdoptionStatus;
@@ -61,6 +64,8 @@ export interface AdoptionRequest {
     githubProfile?: string;
     applicantPhone?: string;
     message?: string;
+    githubUrl?: string;
+    address?: string;
 }
 
 // JSON cannot send a Date object, and json-server creates the request ID.
@@ -75,4 +80,11 @@ export interface ApiResponse<T> {
     success: boolean;
     message: string;
     data: T;
+}
+
+export interface AiReview {
+    summary: string;
+    strengths: string[];
+    improvements: string[];
+    readiness: "ready" | "almost" | "not-yet";
 }
