@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { login as loginWithCredentials } from "../api/client";
 import useAuthStore from "../store/authStore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,9 +28,13 @@ function LoginPage() {
     setIsSubmitting(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      login(`mock-token-${Date.now()}`);
+      const token = await loginWithCredentials(username.trim(), password);
+      login(token);
       navigate("/", { replace: true });
+    } catch (loginError) {
+      setError(
+        loginError instanceof Error ? loginError.message : "Sign in failed.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -123,3 +128,4 @@ function LoginPage() {
 }
 
 export default LoginPage;
+
