@@ -60,6 +60,10 @@ export interface AdoptionRequest {
     status: AdoptionStatus;
     requestedDate?: Date;
     totalFee?: number;
+    applicantEmail?: string;
+    githubProfile?: string;
+    applicantPhone?: string;
+    message?: string;
     githubUrl?: string;
     address?: string;
 }
