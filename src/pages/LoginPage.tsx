@@ -120,10 +120,7 @@ function LoginPage() {
               🔑 Sign In to PAWHOME
             </Button>
 
-            
-            
-            <p className="text-center text-[#3D0C02]/50 dark:text-[#FFFDF3]/50 text-xs font-semibold">Demo login: Angela1 / password123</p>
-          </form>
+</form>
         </div>
       </div>
     </div>
@@ -131,6 +128,7 @@ function LoginPage() {
 }
 
 export default LoginPage;
+
 
 
 
