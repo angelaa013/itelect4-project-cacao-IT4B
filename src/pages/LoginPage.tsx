@@ -7,9 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+const DEMO_USERNAME = "student1";
+const DEMO_PASSWORD = "demo123";
+
 function LoginPage() {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>(DEMO_USERNAME);
+  const [password, setPassword] = useState<string>(DEMO_PASSWORD);
   const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -118,7 +121,7 @@ function LoginPage() {
             </Button>
 
             <p className="text-center text-[#3D0C02]/50 dark:text-[#FFFDF3]/50 text-xs font-semibold">
-              Use any username & password to log in (mock auth)
+              Demo login: student1 / demo123
             </p>
           </form>
         </div>
@@ -128,4 +131,5 @@ function LoginPage() {
 }
 
 export default LoginPage;
+
 
