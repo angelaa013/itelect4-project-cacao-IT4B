@@ -9,7 +9,11 @@ import type {
 import { mockAdopters, mockPets, mockRequests } from "../data/mockData";
 import useAuthStore from "../store/authStore";
 
-const API_ORIGIN = (import.meta.env.VITE_API_URL ?? "").replace(/\/+$/, "");
+const configuredApiOrigin = import.meta.env.VITE_API_URL?.trim() ?? "";
+const API_ORIGIN = (
+  configuredApiOrigin ||
+  (import.meta.env.DEV ? "" : "https://itelect4-backend-cacao.vercel.app")
+).replace(/\/+$/, "");
 const API_BASE_URL = `${API_ORIGIN}/api`;
 const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA === "true";
 const MOCK_REQUESTS_STORAGE_KEY = "pawhome.mock.requests";
@@ -201,4 +205,5 @@ export const askAi = async (prompt: string): Promise<AiReview> => {
 
   return payload as AiReview;
 };
+
 

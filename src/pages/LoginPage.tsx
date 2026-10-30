@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const DEMO_USERNAME = "student1";
-const DEMO_PASSWORD = "demo123";
+const DEMO_USERNAME = "Angela1";
+const DEMO_PASSWORD = "password123";
 
 function LoginPage() {
   const [username, setUsername] = useState<string>(DEMO_USERNAME);
@@ -120,9 +120,9 @@ function LoginPage() {
               🔑 Sign In to PAWHOME
             </Button>
 
-            <p className="text-center text-[#3D0C02]/50 dark:text-[#FFFDF3]/50 text-xs font-semibold">
-              Demo login: student1 / demo123
-            </p>
+            
+            
+            <p className="text-center text-[#3D0C02]/50 dark:text-[#FFFDF3]/50 text-xs font-semibold">Demo login: Angela1 / password123</p>
           </form>
         </div>
       </div>
@@ -131,5 +131,7 @@ function LoginPage() {
 }
 
 export default LoginPage;
+
+
 
 
