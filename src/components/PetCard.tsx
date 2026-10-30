@@ -2,11 +2,6 @@ import type { Pet } from "../types";
 
 interface PetCardProps {
     pet: Pet;
-    onAdopt: (petName: string) => void;
-    isCompact?: boolean;
-}
-
-function PetCard({ pet, onAdopt, isCompact = false }: PetCardProps) {
     isCompact?: boolean;
 }
 
@@ -22,7 +17,6 @@ function PetCard({ pet, isCompact = false }: PetCardProps) {
 
     if (isCompact) {
         return (
-            <div className="flex-1 bg-white dark:bg-[#2B1517] rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 p-4 border-l-4 border-[#FAAB18] border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30">
             <div className="bg-white dark:bg-[#2B1517] rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 p-4 border-l-4 border-[#FAAB18] border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30">
                 <div className="flex items-start justify-between gap-3">
                     <div className="flex-1">
@@ -37,18 +31,11 @@ function PetCard({ pet, isCompact = false }: PetCardProps) {
                         {pet.gender}
                     </span>
                 </div>
-                <button 
-                    onClick={() => onAdopt(pet.name)}
-                    className="hidden"
-                >
-                    <span className="text-[#FA799F]">❤️</span> Adopt
-                </button>
             </div>
         );
     }
 
     return (
-        <div className="flex-1 bg-white dark:bg-[#2B1517] rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30 flex flex-col justify-between">
         <div className="bg-white dark:bg-[#2B1517] rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border-2 border-[#3D0C02]/10 dark:border-[#FAAB18]/30 flex flex-col justify-between">
             <div>
                 {/* Header with Pawhome Warm Amber Accent */}
@@ -88,16 +75,6 @@ function PetCard({ pet, isCompact = false }: PetCardProps) {
                         <p className="text-[#3D0C02]/90 dark:text-[#FFFDF3]/90 italic text-sm font-semibold">"{pet.description}"</p>
                     </div>
                 </div>
-            </div>
-
-            {/* Action */}
-            <div className="px-6 pb-6 pt-2">
-                <button 
-                    onClick={() => onAdopt(pet.name)}
-                    className="hidden"
-                >
-                    <span className="text-[#FA799F] text-lg">❤️</span> Adopt {pet.name}
-                </button>
             </div>
         </div>
     );

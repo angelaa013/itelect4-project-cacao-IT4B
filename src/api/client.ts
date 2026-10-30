@@ -17,8 +17,6 @@ const toAdoptionRequest = (
   request: ApiAdoptionRequest,
 ): AdoptionRequest => ({
   ...request,
-  id: Number.isNaN(Number(request.id)) ? 0 : Number(request.id),
-  requestedDate: request.requestedDate ? new Date(request.requestedDate) : undefined,
   id: request.id,
   requestedDate: request.requestedDate
     ? new Date(request.requestedDate)

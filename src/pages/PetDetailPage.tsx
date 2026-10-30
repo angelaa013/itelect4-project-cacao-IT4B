@@ -1,14 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { getPetById, createAdoptionRequest } from "@/api/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { adoptionRequestSchema, type AdoptionRequestFormValues } from "@/schemas/adoptionRequestSchema";
-import { AdoptionStatus, type Pet } from "@/types";
 import { getPetById, createAdoptionRequest } from "../api/client";
 import { AdoptionStatus, type Pet } from "../types";
 
@@ -36,11 +28,6 @@ function PetDetailPage() {
     }
   });
 
-  const { register, handleSubmit, formState: { errors } } = useForm<AdoptionRequestFormValues>({
-    resolver: zodResolver(adoptionRequestSchema),
-    defaultValues: { applicantName: "", githubProfile: "", phone: "", message: "" },
-  });
-
   const petEmojis: Record<string, string> = {
     dog: "🐕",
     cat: "🐱",
@@ -50,19 +37,6 @@ function PetDetailPage() {
     navigate("/pets");
   };
 
-  const handleAdopt = (values: AdoptionRequestFormValues) => {
-    if (!pet) return;
-    mutation.mutate({
-      petName: pet.name,
-      adopterName: values.applicantName,
-      petId: pet.id,
-      adopterId: 1,
-      status: AdoptionStatus.Pending,
-      requestedDate: new Date().toISOString().split("T")[0],
-      githubProfile: values.githubProfile,
-      applicantPhone: values.phone,
-      message: values.message,
-    });
   const handleAdopt = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (pet) {
@@ -206,31 +180,6 @@ function PetDetailPage() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit(handleAdopt)} noValidate className="space-y-4 rounded-2xl border border-[#3D0C02]/10 bg-[#FFFDF3] p-5">
-            <div>
-              <Label htmlFor="applicant-name">Your name</Label>
-              <Input id="applicant-name" aria-invalid={Boolean(errors.applicantName)} {...register("applicantName")} />
-              {errors.applicantName && <p className="mt-1 text-sm font-semibold text-red-700">{errors.applicantName.message}</p>}
-            </div>
-            <div>
-              <Label htmlFor="github-profile">GitHub profile URL</Label>
-              <Input id="github-profile" type="url" placeholder="https://github.com/your-username" aria-invalid={Boolean(errors.githubProfile)} {...register("githubProfile")} />
-              {errors.githubProfile && <p className="mt-1 text-sm font-semibold text-red-700">{errors.githubProfile.message}</p>}
-            </div>
-            <div>
-              <Label htmlFor="applicant-phone">Phone number</Label>
-              <Input id="applicant-phone" inputMode="tel" aria-invalid={Boolean(errors.phone)} {...register("phone")} />
-              {errors.phone && <p className="mt-1 text-sm font-semibold text-red-700">{errors.phone.message}</p>}
-            </div>
-            <div>
-              <Label htmlFor="application-message">Why are you a good match?</Label>
-              <textarea id="application-message" rows={4} aria-invalid={Boolean(errors.message)} className="flex w-full rounded-2xl border-2 border-[#3D0C02]/20 bg-white px-4 py-3 text-[#3D0C02] focus-visible:outline-none focus-visible:border-[#FAAB18]" {...register("message")} />
-              {errors.message && <p className="mt-1 text-sm font-semibold text-red-700">{errors.message.message}</p>}
-            </div>
-            {mutation.isError && <p className="text-sm font-semibold text-red-700">We could not submit your request. Please try again.</p>}
-            <Button id={`adopt-btn-${pet.id}`} type="submit" size="lg" disabled={mutation.isPending} className="w-full font-black text-lg">
-              {mutation.isPending ? "Submitting..." : `Adopt ${pet.name}`}
-            </Button>
           <form onSubmit={handleAdopt} className="space-y-4 rounded-2xl border-2 border-[#FAAB18]/40 bg-[#FFFDF3] dark:bg-[#1E0C0E] p-5">
             <div>
               <h2 className="text-xl font-black text-[#3D0C02] dark:text-[#FFFDF3]">Your adoption details</h2>

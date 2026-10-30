@@ -3,12 +3,6 @@ import { AdoptionStatus } from "../types";
 
 interface AdoptionRequestCardProps {
     request: AdoptionRequest;
-    requestNumber: number;
-    isCompact?: boolean;
-}
-
-function AdoptionRequestCard({ request: apiRequest, requestNumber, isCompact = false }: AdoptionRequestCardProps) {
-    const request = { ...apiRequest, id: requestNumber };
     displayNumber?: number;
     isCompact?: boolean;
 }
@@ -47,7 +41,6 @@ function AdoptionRequestCard({ request, displayNumber = Number(request.id), isCo
         return (
             <div className="bg-[#FFFDF7] dark:bg-[#2D1F15] rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 p-4 border-r-4 border-[#F4A21A] border-2 border-[#4A3525]/10 dark:border-[#F4A21A]/30">
                 <h3 className="text-lg font-extrabold text-[#4A3525] dark:text-[#F4A21A] mb-2">
-                    📋 Request #{request.id}
                     📋 Request #{displayNumber}
                 </h3>
                 <div className="space-y-1.5 text-sm font-semibold text-[#4A3525]/80 dark:text-[#FFF8EC]/80 mb-3">
@@ -70,7 +63,6 @@ function AdoptionRequestCard({ request, displayNumber = Number(request.id), isCo
                         <div className="flex items-center gap-3">
                             <span className="text-3xl bg-[#F4A21A] text-[#4A3525] p-2.5 rounded-2xl shadow-sm">📋</span>
                             <div>
-                                <h3 className="text-2xl font-extrabold text-[#4A3525] dark:text-[#F4A21A] tracking-tight">Request #{requestNumber}</h3>
                                 <h3 className="text-2xl font-extrabold text-[#4A3525] dark:text-[#F4A21A] tracking-tight">Request #{displayNumber}</h3>
                                 <p className="text-[#C78208] dark:text-[#FA799F] text-xs font-extrabold uppercase tracking-wider">Adoption Details</p>
                             </div>
@@ -96,9 +88,6 @@ function AdoptionRequestCard({ request, displayNumber = Number(request.id), isCo
                         </div>
 
                         <div className="bg-[#FFF8EC] dark:bg-[#1F140D] border-l-4 border-[#4A3525] rounded-2xl p-3.5 border border-[#4A3525]/20 dark:border-[#F4A21A]/20">
-                            <p className="text-[11px] font-extrabold uppercase text-[#4A3525]/70 dark:text-[#F4A21A] tracking-wider">GitHub profile</p>
-                            <p className="text-[#4A3525] dark:text-[#FFF8EC] font-extrabold mt-1 text-xs break-all">
-                                {request.githubProfile ?? "Not provided"}
                             <p className="text-[11px] font-extrabold uppercase text-[#4A3525]/70 dark:text-[#F4A21A] tracking-wider">Contact number</p>
                             <p className="text-[#4A3525] dark:text-[#FFF8EC] font-extrabold mt-1 text-xs truncate">
                                 {request.adopterContact ?? "Not provided"}
@@ -127,7 +116,6 @@ function AdoptionRequestCard({ request, displayNumber = Number(request.id), isCo
             <div className="px-6 pb-6 pt-2">
                 <div className="flex items-center justify-between text-sm">
                     <span className="text-[#4A3525]/80 dark:text-[#FFF8EC]/80 font-bold">
-                        Request number: <span className="font-extrabold">#{requestNumber}</span>
                         Request ID: <span className="font-extrabold">#{displayNumber}</span>
                     </span>
                     <span className="inline-flex items-center gap-1 bg-[#FFF1D6] dark:bg-[#1F140D] text-[#4A3525] dark:text-[#F4A21A] px-3 py-1 rounded-full text-xs font-extrabold border border-[#F4A21A]/40">
